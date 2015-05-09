@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha1"
 	"database/sql"
 	"fmt"
 	"io"
@@ -11,8 +12,21 @@ import (
 var nb []byte
 
 const schema = `
-create table if not exists graphs(id integer not null primary key, graph_string text);
+create table if not exists graphs (id text not null primary key, format text, text text);
 `
+
+type Graph struct {
+	Id     string
+	Format string
+	Text   string
+}
+
+func (g *Graph) GetId() string {
+	h := sha1.New()
+	io.WriteString(h, g.Format)
+	io.WriteString(h, g.Text)
+	return fmt.Sprintf("%x", h.Sum(nil))
+}
 
 type sqlGraphviz struct {
 	dbpath      string
@@ -49,12 +63,12 @@ func NewSqlGraphviz(dbpath string) (*sqlGraphviz, error) {
 		return nil, err
 	}
 
-	stmt_insert, err := db.Prepare("insert into graphs (graph_string) values(?)")
+	stmt_insert, err := db.Prepare("insert into graphs (id, format, text) values(?, ?, ?)")
 	if err != nil {
 		return nil, err
 	}
 
-	stmt_select, err := db.Prepare("select graph_string from graphs where id = ?")
+	stmt_select, err := db.Prepare("select format, text from graphs where id = ?")
 	if err != nil {
 		return nil, err
 	}
@@ -74,37 +88,39 @@ func NewSqlGraphviz(dbpath string) (*sqlGraphviz, error) {
 	return q, nil
 }
 
-func (q *sqlGraphviz) Create(graph string) (int64, error) {
-	res, err := q.stmt_insert.Exec(graph)
+func (q *sqlGraphviz) Create(g *Graph) (string, error) {
+
+	id := g.GetId()
+
+	_, err := q.stmt_insert.Exec(id, g.Format, g.Text)
 	if err != nil {
-		return 0, err
+		return "", err
 	}
-	id, err := res.LastInsertId()
-	if err != nil {
-		return 0, err
-	}
-	log.Tracef("create id %d from graph %d bytes", id, len(graph))
+	log.Tracef("create id %s from graph %d bytes", id, len(g.Text))
 	return id, nil
 }
 
-func (q *sqlGraphviz) Get(id int64) (string, error) {
+func (q *sqlGraphviz) Get(id string) (*Graph, error) {
 	row := q.stmt_select.QueryRow(id)
 	if row == nil {
-		return "", io.EOF
+		return nil, io.EOF
 	}
 
-	var graph string
-	err := row.Scan(&graph)
+	g := &Graph{
+		Id: id,
+	}
+
+	err := row.Scan(&g.Format, &g.Text)
 	if err == sql.ErrNoRows {
-		return "", io.EOF
+		return nil, io.EOF
 	} else if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return graph, nil
+	return g, nil
 }
 
-func (q *sqlGraphviz) Delete(id int) error {
+func (q *sqlGraphviz) Delete(id string) error {
 	_, err := q.stmt_delete.Exec(id)
 	if err != nil {
 		return err

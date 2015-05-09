@@ -4,16 +4,22 @@
 <title>graphspace - graphviz editor</title>
 </head>
 <body>
+<form id=form>
+   <input type=radio name=format value=dot checked=true> dot &nbsp; 
+   <input type=radio name=format value=neato> neato &nbsp; 
+   <input type=radio name=format value=twopi> twopi &nbsp; 
+   <input type=radio name=format value=circle> circle &nbsp; 
+   <input type=radio name=format value=fdp> fdp &nbsp; 
+   <input type=radio name=format value=sfdp> sfdp &nbsp; 
+   <input type=radio name=format value=patchwork> patchwork &nbsp; 
+   <br>
+   <textarea id=text name=text rows=15 cols=30>
+   </textarea>
+   <br>
 
-<input type=radio name=format value=dot checked=true> dot &nbsp; 
-<input type=radio name=format value=neato> neato &nbsp; 
+<input class=update type=button name=btn value=Submit>
 <br>
-<textarea id=text name=text rows=15 cols=30>
-</textarea>
-<br>
-
-<input class=update type=submit name=btn value=Submit>
-<br>
+</form>
 
 <div id=link></div>
 <div id=graph>click submit to update image</div>
@@ -38,7 +44,7 @@ $(function() {
 
    $.ajax({
       type: "POST",
-      url: "/proc",
+      url: "/proc?format=" + $('#form input[name=format]:checked').val(),
       contentType: "image/png",
       dataType: "json",
       data: $('#text').val(),
@@ -54,10 +60,11 @@ $(function() {
  if (id) {
    $.ajax({
       type: "POST",
-      url: "/proc?id=" + id,
+      url: "/proc?format=" + $('#form input[name=format]:checked').val() + "&id=" + id,
       contentType: "image/png",
       dataType: "json",
       success: function(data) {
+         $('#form input[name=format][value=' + data.format + ']').attr('checked', 'checked')
          $('#text').val(data.text)
          $('#link').html('<a href="?id=' + data.id + '">share<a/>')
          $('#graph').html('<img src="data:image/png;base64,' + data.image + '"/>')
