@@ -8,6 +8,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+var nb []byte
+
 const schema = `
 create table if not exists graphs(id integer not null primary key, graph_string text);
 `
@@ -36,7 +38,7 @@ func PrepareSqliteDb(dbpath string) error {
 	return nil
 }
 
-func NewsqlGraphviz(dbpath string) (*sqlGraphviz, error) {
+func NewSqlGraphviz(dbpath string) (*sqlGraphviz, error) {
 	err := PrepareSqliteDb(dbpath)
 	if err != nil {
 		return nil, fmt.Errorf("prepare %s: %s", dbpath, err)
@@ -72,23 +74,27 @@ func NewsqlGraphviz(dbpath string) (*sqlGraphviz, error) {
 	return q, nil
 }
 
-func (q *sqlGraphviz) Create(graph string) error {
-	log.Tracef("create %s", graph)
-	_, err := q.stmt_insert.Exec(graph)
+func (q *sqlGraphviz) Create(graph string) (int64, error) {
+	res, err := q.stmt_insert.Exec(graph)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+	id, err := res.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+	log.Tracef("create id %d from graph %d bytes", id, len(graph))
+	return id, nil
 }
 
-func (q *sqlGraphviz) Get(id int) (string, error) {
+func (q *sqlGraphviz) Get(id int64) (string, error) {
 	row := q.stmt_select.QueryRow(id)
 	if row == nil {
 		return "", io.EOF
 	}
 
 	var graph string
-	err := row.Scan( &graph)
+	err := row.Scan(&graph)
 	if err == sql.ErrNoRows {
 		return "", io.EOF
 	} else if err != nil {

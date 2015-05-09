@@ -15,9 +15,24 @@
 <input class=update type=submit name=btn value=Submit>
 <br>
 
+<div id=link></div>
 <div id=graph>click submit to update image</div>
 
 <script>
+function getUrlParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
+}         
+
 $(function() {
  $('.update').click(function(){
 
@@ -25,13 +40,33 @@ $(function() {
       type: "POST",
       url: "/proc",
       contentType: "image/png",
+      dataType: "json",
       data: $('#text').val(),
       success: function(data) {
-         $('#graph').html('<img src="data:image/png;base64,' + data + '"/>')
+         $('#link').html('<a href="?id=' + data.id + '">share<a/>')
+         $('#graph').html('<img src="data:image/png;base64,' + data.image + '"/>')
       }
    })
    return false;
  });
+
+ id = getUrlParameter("id")
+ if (id) {
+   $.ajax({
+      type: "POST",
+      url: "/proc?id=" + id,
+      contentType: "image/png",
+      dataType: "json",
+      success: function(data) {
+         $('#text').val(data.text)
+         $('#link').html('<a href="?id=' + data.id + '">share<a/>')
+         $('#graph').html('<img src="data:image/png;base64,' + data.image + '"/>')
+      }
+   })
+    
+ }
+
+
 });
 </script>
 </body>
