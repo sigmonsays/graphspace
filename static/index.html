@@ -1,0 +1,37 @@
+<html>
+<head>
+<script type="text/javascript" src="/static/jquery-1.11.2.js"></script>
+<title>graphspace - graphviz editor</title>
+</head>
+<body>
+
+<input type=radio name=format value=dot checked=true> dot &nbsp; 
+<input type=radio name=format value=neato> neato &nbsp; 
+<br>
+<textarea id=text name=text rows=15 cols=30>
+</textarea>
+<br>
+
+<input class=update type=submit name=btn value=Submit>
+<br>
+
+<div id=graph>click submit to update image</div>
+
+<script>
+$(function() {
+ $('.update').click(function(){
+
+   $.ajax({
+      type: "POST",
+      url: "/proc",
+      contentType: "image/png",
+      data: $('#text').val(),
+      success: function(data) {
+         $('#graph').html('<img src="data:image/png;base64,' + data + '"/>')
+      }
+   })
+   return false;
+ });
+});
+</script>
+</body>
