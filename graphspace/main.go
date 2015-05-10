@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -41,8 +42,11 @@ func NewGraphvizHandler() (*GraphvizHandler, error) {
 }
 
 func (h *GraphvizHandler) Index(w http.ResponseWriter, r *http.Request) {
-	r.URL.Path = "/static/index.html"
+	if r.URL.Path == "/" {
+		r.URL.Path = "/static/index.html"
+	}
 	h.Static(w, r)
+
 }
 
 func (h *GraphvizHandler) Static(w http.ResponseWriter, r *http.Request) {
@@ -51,9 +55,12 @@ func (h *GraphvizHandler) Static(w http.ResponseWriter, r *http.Request) {
 		asset = r.URL.Path[1:]
 	}
 	buf, err := data.Asset(asset)
-	if err == nil {
-		w.Write(buf)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintf(w, "%s", err)
+		return
 	}
+	w.Write(buf)
 
 }
 
