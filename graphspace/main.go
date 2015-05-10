@@ -20,6 +20,7 @@ type Request struct {
 	Text          string
 	Width, Height string
 	Output        string
+	Description   string
 }
 
 type Response struct {
@@ -140,6 +141,7 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 		}
 
 		g.Output = req.Output
+		g.Description = req.Description
 	}
 
 	response, err := GraphvizImage(g)
@@ -156,6 +158,10 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 	}
 	if id == "" {
 		id = g.GetId()
+	}
+
+	if g.Description == "" {
+		g.Description = "graph"
 	}
 
 	ret := &Response{
