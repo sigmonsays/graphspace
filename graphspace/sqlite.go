@@ -16,13 +16,15 @@ create table if not exists graphs (id text not null primary key, format text, te
 `
 
 type Graph struct {
-	Id     string
-	Format string
-	Text   string
+	Id            string
+	Format        string
+	Text          string
+	Width, Height int
 }
 
 func (g *Graph) GetId() string {
 	h := sha1.New()
+	io.WriteString(h, fmt.Sprintf("%d-%d", g.Width, g.Height))
 	io.WriteString(h, g.Format)
 	io.WriteString(h, g.Text)
 	return fmt.Sprintf("%x", h.Sum(nil))

@@ -44,8 +44,9 @@ body {
       <br>
    </div>
    <div id="tabs-2">
-      Width <input type=text name=width value=150 size=4> <p>
-      Height <input type=text name=height value=150 size=4> <p>
+      Optimal Width and Height (assumed 100 DPI)<br>
+      Width <input type=text name=width value=5 size=4> &nbsp; Height <input type=text name=height value=5 size=4> 
+      <p>
 
    </div>
 </div>
@@ -58,6 +59,24 @@ body {
 <div id=graph>click submit to update image</div>
 
 <script>
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+
 function getUrlParameter(sParam)
 {
     var sPageURL = window.location.search.substring(1);
@@ -79,10 +98,10 @@ $(function() {
 
    $.ajax({
       type: "POST",
-      url: "/proc?format=" + $('#form input[name=format]:checked').val(),
+      url: "/proc",
       contentType: "image/png",
       dataType: "json",
-      data: $('#text').val(),
+      data: JSON.stringify($('#form').serializeObject()),
       success: function(data) {
          $('#link').html('<a href="?id=' + data.id + '">share<a/>')
          $('#graph').html('<img src="data:image/png;base64,' + data.image + '"/>')
@@ -95,11 +114,11 @@ $(function() {
  if (id) {
    $.ajax({
       type: "POST",
-      url: "/proc?format=" + $('#form input[name=format]:checked').val() + "&id=" + id,
+      url: "/proc?format=" + $("#form input[name='format']:checked").val() + "&id=" + id,
       contentType: "image/png",
       dataType: "json",
       success: function(data) {
-         $('#form input[name=format][value=' + data.format + ']').attr('checked', 'checked')
+         $("#form input[name='format'][value=" + data.format + "]").attr('checked', 'checked')
          $('#text').val(data.text)
          $('#link').html('<a href="?id=' + data.id + '">share<a/>')
          $('#graph').html('<img src="data:image/png;base64,' + data.image + '"/>')

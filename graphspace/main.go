@@ -6,11 +6,12 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"os/exec"
+	"strconv"
 
+	"github.com/awalterschulze/gographviz"
 	"github.com/sigmonsays/go-apachelog"
 	gologging "github.com/sigmonsays/go-logging"
 	"github.com/sigmonsays/graphspace/data"
@@ -64,6 +65,12 @@ func (h *GraphvizHandler) Static(w http.ResponseWriter, r *http.Request) {
 
 }
 
+type Request struct {
+	Format        string
+	Text          string
+	Width, Height string
+}
+
 type Response struct {
 	Id     string `json:"id"`
 	Format string `json:"format"`
@@ -80,26 +87,24 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	format := r.Form.Get("format")
 	id := r.Form.Get("id")
 
-	var graph_string string
-	var g *Graph
+	req := &Request{
+		Format: "dot",
+	}
+	g := &Graph{}
 
 	if id != "" {
 
 		if id == "example" {
 			g = &Graph{
-				Id:   "example",
-				Text: Example,
+				Format: "dot",
+				Text:   Example,
 			}
-			graph_string = g.Text
 
 		} else if id == "random" {
-			graph_string = RandomGraph()
-			g = &Graph{
-				Text: graph_string,
-			}
+			g.Format = req.Format
+			g.Text = RandomGraph()
 
 		} else {
 
@@ -109,24 +114,39 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
-			graph_string = g.Text
-			format = g.Format
 		}
 
 	} else {
-		req, err := ioutil.ReadAll(r.Body)
+		err := json.NewDecoder(r.Body).Decode(req)
 		if err != nil {
-			log.Warnf("read: %s", err)
+			log.Warnf("decode: %s", err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		graph_string = string(req)
-		g = &Graph{
-			Text: graph_string,
+		g.Text = req.Text
+		g.Format = req.Format
+
+		if req.Width != "" {
+			val, err := strconv.ParseInt(req.Width, 10, 32)
+			if err != nil {
+				log.Warnf("width: %s", err)
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+			g.Width = int(val)
+		}
+		if req.Height != "" {
+			val, err := strconv.ParseInt(req.Height, 10, 32)
+			if err != nil {
+				log.Warnf("height: %s", err)
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+			g.Height = int(val)
 		}
 	}
 
-	cmd_name, ok := SupportedFormats[format]
+	cmd_name, ok := SupportedFormats[req.Format]
 	if ok == false {
 		cmd_name = "dot"
 	}
@@ -134,23 +154,36 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 		cmd_name, "-Tpng",
 	}
 
+	if g.Width > 0 && g.Height > 0 {
+		cmdline = append(cmdline, fmt.Sprintf("-Gsize=%d,%d!", g.Width, g.Height))
+		cmdline = append(cmdline, "-Gdpi=100")
+	}
+
+	if g.Text == "" {
+		log.Warnf("empty graph")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	_, err = gographviz.Read([]byte(g.Text))
+	if err != nil {
+		log.Warnf("graph: %s", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
 	response := bytes.NewBuffer(nil)
 	cmd := exec.Command(cmdline[0], cmdline[1:]...)
-	cmd.Stdin = bytes.NewBuffer([]byte(graph_string))
+	cmd.Stdin = bytes.NewBuffer([]byte(g.Text))
 	cmd.Stdout = response
 	err = cmd.Run()
 	if err != nil {
-		log.Warnf("%s [%s] - %s", cmdline, graph_string, err)
+		log.Warnf("%s [%s] - %s", cmdline, g.Text, err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	image := base64.StdEncoding.EncodeToString(response.Bytes())
-
-	g = &Graph{
-		Format: format,
-		Text:   graph_string,
-	}
 
 	if id == "" {
 		id, err = h.backend.Create(g)
@@ -163,9 +196,9 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 
 	ret := &Response{
 		Id:     id,
-		Format: format,
+		Format: g.Format,
 		Image:  image,
-		Text:   graph_string,
+		Text:   g.Text,
 	}
 
 	json.NewEncoder(w).Encode(ret)
