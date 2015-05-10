@@ -30,6 +30,7 @@ func (g *Graph) GetId() string {
 	}
 	io.WriteString(h, text)
 	io.WriteString(h, g.Output)
+	io.WriteString(h, g.Description)
 	b64 := base64.URLEncoding.EncodeToString(h.Sum(nil))
 	return strings.Replace(b64, "=", "", -1)
 
