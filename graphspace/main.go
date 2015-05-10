@@ -29,6 +29,7 @@ type Response struct {
 	Text        string `json:"text"`
 	Output      string `json:"output"`
 	ContentType string `json:"content_type"`
+	Description string `json:"description"`
 }
 type GraphvizHandler struct {
 	backend *sqlGraphviz
@@ -40,8 +41,8 @@ func WriteError(w http.ResponseWriter, r *http.Request, err error) {
 	fmt.Fprintf(w, "%s", err)
 }
 
-func NewGraphvizHandler() (*GraphvizHandler, error) {
-	backend, err := NewSqlGraphviz("/tmp/graphspace.db")
+func NewGraphvizHandler(dbpath string) (*GraphvizHandler, error) {
+	backend, err := NewSqlGraphviz(dbpath)
 	if err != nil {
 		return nil, err
 	}
@@ -164,6 +165,7 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 		Text:        g.Text,
 		Output:      g.Output,
 		ContentType: response.ContentType,
+		Description: g.Description,
 	}
 
 	json.NewEncoder(w).Encode(ret)
@@ -215,10 +217,12 @@ func (h *GraphvizHandler) Image(w http.ResponseWriter, r *http.Request) {
 func main() {
 	gologging.SetLogLevel("trace")
 	addr := ":7001"
+	dbpath := "/tmp/graphspace.db"
 	flag.StringVar(&addr, "addr", addr, "http server address")
+	flag.StringVar(&dbpath, "dbpath", dbpath, "database path")
 	flag.Parse()
 
-	svc, err := NewGraphvizHandler()
+	svc, err := NewGraphvizHandler(dbpath)
 	if err != nil {
 		panic(err)
 	}

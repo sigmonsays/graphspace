@@ -37,6 +37,7 @@ body {
          <input type=radio name=format value=sfdp> sfdp &nbsp; 
          <input type=radio name=format value=patchwork> patchwork &nbsp; 
          <br>
+         <input type=text name=description size=50>
          <textarea style="width: 80%;" id=text name=text rows=15 cols=50></textarea>
          <br>
 
@@ -102,6 +103,8 @@ function updateImage(data) {
 
    $('#graph').html('<a href="' + img_url + '"><img src="data:' + data.content_type + ';base64,' + data.image + '"/></a>')
    $('#text').val(data.text)
+
+   alert(data.description)
 
    if (data.format) {
       $("#form input[name='format'][value=" + data.format + "]").attr('checked', 'checked')

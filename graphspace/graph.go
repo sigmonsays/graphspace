@@ -13,6 +13,7 @@ import (
 )
 
 type Graph struct {
+	Description   string
 	Format        string
 	Text          string
 	Width, Height int

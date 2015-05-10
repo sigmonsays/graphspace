@@ -15,7 +15,8 @@ create table if not exists graphs (
 	text text,
 	width int, 
 	height int, 
-	output text
+	output text,
+	description text
 );
 `
 
@@ -54,12 +55,12 @@ func NewSqlGraphviz(dbpath string) (*sqlGraphviz, error) {
 		return nil, err
 	}
 
-	stmt_insert, err := db.Prepare("insert into graphs (id, format, text, width, height, output) values(?, ?, ?, ?, ?, ?)")
+	stmt_insert, err := db.Prepare("insert into graphs (id, format, text, width, height, output, description) values(?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		return nil, err
 	}
 
-	stmt_select, err := db.Prepare("select format, text, width, height, output from graphs where id = ?")
+	stmt_select, err := db.Prepare("select format, text, width, height, output, description from graphs where id = ?")
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +85,7 @@ func (q *sqlGraphviz) Create(g *Graph) (string, error) {
 	id := g.GetId()
 	log.Tracef("graph id=%s", id)
 
-	_, err := q.stmt_insert.Exec(id, g.Format, g.Text, g.Width, g.Height, g.Output)
+	_, err := q.stmt_insert.Exec(id, g.Format, g.Text, g.Width, g.Height, g.Output, g.Description)
 	if err != nil {
 		return "", err
 	}
@@ -100,7 +101,7 @@ func (q *sqlGraphviz) Get(id string) (*Graph, error) {
 
 	g := &Graph{}
 
-	err := row.Scan(&g.Format, &g.Text, &g.Width, &g.Height, &g.Output)
+	err := row.Scan(&g.Format, &g.Text, &g.Width, &g.Height, &g.Output, &g.Description)
 	if err == sql.ErrNoRows {
 		return nil, io.EOF
 	} else if err != nil {
