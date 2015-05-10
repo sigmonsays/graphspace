@@ -8,6 +8,11 @@ import (
 	"github.com/awalterschulze/gographviz"
 )
 
+var Outputs = map[string]string{
+	"png": "image/png",
+	"jpg": "image/jpg",
+	"svg": "image/svg+xml",
+}
 var SupportedFormats = map[string]string{
 	"dot":       "dot",
 	"neato":     "neato",
@@ -18,15 +23,27 @@ var SupportedFormats = map[string]string{
 	"patchwork": "patchwork",
 }
 
-func GraphvizImage(g *Graph) ([]byte, error) {
+type Image struct {
+	ContentType string
+	Bytes       []byte
+}
+
+func GraphvizImage(g *Graph) (*Image, error) {
 	var err error
 	cmd_name, ok := SupportedFormats[g.Format]
 	if ok == false {
 		cmd_name = "dot"
 	}
 	cmdline := []string{
-		cmd_name, "-Tpng",
+		cmd_name,
 	}
+
+	content_type, ok := Outputs[g.Output]
+	if ok == false {
+		g.Output = "png"
+		content_type = Outputs[g.Output]
+	}
+	cmdline = append(cmdline, "-T"+g.Output)
 
 	if g.Width > 0 && g.Height > 0 {
 		cmdline = append(cmdline, fmt.Sprintf("-Gsize=%d,%d!", g.Width, g.Height))
@@ -42,6 +59,8 @@ func GraphvizImage(g *Graph) ([]byte, error) {
 		return nil, fmt.Errorf("graph: %s", err)
 	}
 
+	log.Tracef("%s", cmdline)
+
 	response := bytes.NewBuffer(nil)
 	cmd := exec.Command(cmdline[0], cmdline[1:]...)
 	cmd.Stdin = bytes.NewBuffer([]byte(g.Text))
@@ -50,5 +69,9 @@ func GraphvizImage(g *Graph) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	return response.Bytes(), nil
+	ret := &Image{
+		Bytes:       response.Bytes(),
+		ContentType: content_type,
+	}
+	return ret, nil
 }

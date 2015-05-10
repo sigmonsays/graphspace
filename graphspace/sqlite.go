@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/sha1"
 	"database/sql"
+	"encoding/base64"
 	"fmt"
 	"io"
 
@@ -12,7 +13,14 @@ import (
 var nb []byte
 
 const schema = `
-create table if not exists graphs (id text not null primary key, format text, text text);
+create table if not exists graphs (
+	id text not null primary key, 
+	format text, 
+	text text,
+	width int, 
+	height int, 
+	output text
+);
 `
 
 type Graph struct {
@@ -20,6 +28,7 @@ type Graph struct {
 	Format        string
 	Text          string
 	Width, Height int
+	Output        string
 }
 
 func (g *Graph) GetId() string {
@@ -27,7 +36,8 @@ func (g *Graph) GetId() string {
 	io.WriteString(h, fmt.Sprintf("%d-%d", g.Width, g.Height))
 	io.WriteString(h, g.Format)
 	io.WriteString(h, g.Text)
-	return fmt.Sprintf("%x", h.Sum(nil))
+	io.WriteString(h, g.Output)
+	return base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
 
 type sqlGraphviz struct {
@@ -65,12 +75,12 @@ func NewSqlGraphviz(dbpath string) (*sqlGraphviz, error) {
 		return nil, err
 	}
 
-	stmt_insert, err := db.Prepare("insert into graphs (id, format, text) values(?, ?, ?)")
+	stmt_insert, err := db.Prepare("insert into graphs (id, format, text, width, height, output) values(?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		return nil, err
 	}
 
-	stmt_select, err := db.Prepare("select format, text from graphs where id = ?")
+	stmt_select, err := db.Prepare("select format, text, width, height, output from graphs where id = ?")
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +105,7 @@ func (q *sqlGraphviz) Create(g *Graph) (string, error) {
 	id := g.GetId()
 	log.Tracef("graph id=%s", id)
 
-	_, err := q.stmt_insert.Exec(id, g.Format, g.Text)
+	_, err := q.stmt_insert.Exec(id, g.Format, g.Text, g.Width, g.Height, g.Output)
 	if err != nil {
 		return "", err
 	}
@@ -113,7 +123,7 @@ func (q *sqlGraphviz) Get(id string) (*Graph, error) {
 		Id: id,
 	}
 
-	err := row.Scan(&g.Format, &g.Text)
+	err := row.Scan(&g.Format, &g.Text, &g.Width, &g.Height, &g.Output)
 	if err == sql.ErrNoRows {
 		return nil, io.EOF
 	} else if err != nil {

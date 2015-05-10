@@ -15,7 +15,7 @@ body {
 <body>
 <div style="width: 80%;">
    <a href="/"><b>Graphspace</b></a> is a tool for building graphviz graphs &nbsp; 
-   - &nbsp; <a href="?id=example">example</a> &nbsp;
+     &nbsp; <a href="?id=example">example</a> &nbsp;
    - &nbsp; <a href="?id=random">random</a> &nbsp;
    - &nbsp; <a href="http://www.graphviz.org/Gallery.php">gallery</a> &nbsp;
    - &nbsp; <a href="http://github.com/sigmonsays/graphspace">code</a> &nbsp;
@@ -46,6 +46,10 @@ body {
       Optimal Width and Height (assumed 100 DPI)<br>
       Width <input type=text name=width size=4> &nbsp; Height <input type=text name=height size=4>  (ie 5 x 5)
       <p>
+      Output Format
+         <input type=radio name=output value=png checked=true> PNG &nbsp; 
+         <input type=radio name=output value=jpg> JPG &nbsp; 
+         <input type=radio name=output value=svg> SVG &nbsp; 
 
    </div>
 </div>
@@ -92,14 +96,17 @@ function getUrlParameter(sParam)
 
 function updateImage(data) {
    var link_text = '<a href="?id=' + data.id + '">share<a/>'
-   link_text += '&nbsp; <a href="/image?id=' + data.id + '">image<a/>'
+   link_text += '&nbsp; <a href="/image/graph.' + data.output + '?id=' + data.id + '">image<a/>'
    $('#link').html(link_text)
 
-   $('#graph').html('<img src="data:image/png;base64,' + data.image + '"/>')
+   $('#graph').html('<img src="data:' + data.content_type + ';base64,' + data.image + '"/>')
    $('#text').val(data.text)
 
    if (data.format) {
       $("#form input[name='format'][value=" + data.format + "]").attr('checked', 'checked')
+   }
+   if (data.output) {
+      $("#form input[name='output'][value=" + data.output + "]").attr('checked', 'checked')
    }
 }
 

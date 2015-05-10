@@ -14,6 +14,21 @@ import (
 	"github.com/sigmonsays/graphspace/data"
 )
 
+type Request struct {
+	Format        string
+	Text          string
+	Width, Height string
+	Output        string
+}
+
+type Response struct {
+	Id          string `json:"id"`
+	Format      string `json:"format"`
+	Image       string `json:"image"`
+	Text        string `json:"text"`
+	Output      string `json:"output"`
+	ContentType string `json:"content_type"`
+}
 type GraphvizHandler struct {
 	backend *sqlGraphviz
 }
@@ -57,19 +72,6 @@ func (h *GraphvizHandler) Static(w http.ResponseWriter, r *http.Request) {
 
 }
 
-type Request struct {
-	Format        string
-	Text          string
-	Width, Height string
-}
-
-type Response struct {
-	Id     string `json:"id"`
-	Format string `json:"format"`
-	Image  string `json:"image"`
-	Text   string `json:"text"`
-}
-
 func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
@@ -82,6 +84,7 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 
 	req := &Request{
 		Format: "dot",
+		Output: "png",
 	}
 	g := &Graph{}
 
@@ -133,6 +136,8 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 			}
 			g.Height = int(val)
 		}
+
+		g.Output = req.Output
 	}
 
 	response, err := GraphvizImage(g)
@@ -141,7 +146,7 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	image := base64.StdEncoding.EncodeToString(response)
+	image := base64.StdEncoding.EncodeToString(response.Bytes)
 
 	id, err = h.backend.Create(g)
 	if err != nil {
@@ -152,10 +157,12 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ret := &Response{
-		Id:     id,
-		Format: g.Format,
-		Image:  image,
-		Text:   g.Text,
+		Id:          id,
+		Format:      g.Format,
+		Image:       image,
+		Text:        g.Text,
+		Output:      g.Output,
+		ContentType: response.ContentType,
 	}
 
 	json.NewEncoder(w).Encode(ret)
@@ -190,9 +197,9 @@ func (h *GraphvizHandler) Image(w http.ResponseWriter, r *http.Request) {
 	}
 
 	hdr := w.Header()
-	hdr.Set("Content-Type", "image/png")
-	hdr.Set("Content-Length", fmt.Sprintf("%d", len(response)))
-	w.Write(response)
+	hdr.Set("Content-Type", response.ContentType)
+	hdr.Set("Content-Length", fmt.Sprintf("%d", len(response.Bytes)))
+	w.Write(response.Bytes)
 }
 
 func main() {
@@ -210,7 +217,7 @@ func main() {
 	mux.HandleFunc("/", svc.Index)
 	mux.HandleFunc("/static/", svc.Static)
 	mux.HandleFunc("/proc", svc.Proc)
-	mux.HandleFunc("/image", svc.Image)
+	mux.HandleFunc("/image/", svc.Image)
 
 	handler := apachelog.NewHandler(mux, os.Stderr)
 	err = http.ListenAndServe(addr, handler)
