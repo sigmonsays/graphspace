@@ -93,6 +93,7 @@ func NewSqlGraphviz(dbpath string) (*sqlGraphviz, error) {
 func (q *sqlGraphviz) Create(g *Graph) (string, error) {
 
 	id := g.GetId()
+	log.Tracef("graph id=%s", id)
 
 	_, err := q.stmt_insert.Exec(id, g.Format, g.Text)
 	if err != nil {

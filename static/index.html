@@ -90,6 +90,19 @@ function getUrlParameter(sParam)
     }
 }         
 
+function updateImage(data) {
+   var link_text = '<a href="?id=' + data.id + '">share<a/>'
+   link_text += '&nbsp; <a href="/image?id=' + data.id + '">image<a/>'
+   $('#link').html(link_text)
+
+   $('#graph').html('<img src="data:image/png;base64,' + data.image + '"/>')
+   $('#text').val(data.text)
+
+   if (data.format) {
+      $("#form input[name='format'][value=" + data.format + "]").attr('checked', 'checked')
+   }
+}
+
 $(function() {
  $('#tabs').tabs()
 
@@ -102,8 +115,7 @@ $(function() {
       dataType: "json",
       data: JSON.stringify($('#form').serializeObject()),
       success: function(data) {
-         $('#link').html('<a href="?id=' + data.id + '">share<a/>')
-         $('#graph').html('<img src="data:image/png;base64,' + data.image + '"/>')
+         updateImage(data)
       }
    })
    return false;
@@ -117,10 +129,7 @@ $(function() {
       contentType: "image/png",
       dataType: "json",
       success: function(data) {
-         $("#form input[name='format'][value=" + data.format + "]").attr('checked', 'checked')
-         $('#text').val(data.text)
-         $('#link').html('<a href="?id=' + data.id + '">share<a/>')
-         $('#graph').html('<img src="data:image/png;base64,' + data.image + '"/>')
+         updateImage(data)
       }
    })
     

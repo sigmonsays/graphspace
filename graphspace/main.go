@@ -1,34 +1,27 @@
 package main
 
 import (
-	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"net/http"
 	"os"
-	"os/exec"
 	"strconv"
 
-	"github.com/awalterschulze/gographviz"
 	"github.com/sigmonsays/go-apachelog"
 	gologging "github.com/sigmonsays/go-logging"
 	"github.com/sigmonsays/graphspace/data"
 )
 
-var SupportedFormats = map[string]string{
-	"dot":       "dot",
-	"neato":     "neato",
-	"twopi":     "twopi",
-	"circo":     "circo",
-	"fdp":       "fdp",
-	"sfdp":      "sfdp",
-	"patchwork": "patchwork",
-}
-
 type GraphvizHandler struct {
 	backend *sqlGraphviz
+}
+
+func WriteError(w http.ResponseWriter, r *http.Request, err error) {
+	log.Warnf("%s", err)
+	w.WriteHeader(http.StatusBadRequest)
+	fmt.Fprintf(w, "%s", err)
 }
 
 func NewGraphvizHandler() (*GraphvizHandler, error) {
@@ -57,8 +50,7 @@ func (h *GraphvizHandler) Static(w http.ResponseWriter, r *http.Request) {
 	}
 	buf, err := data.Asset(asset)
 	if err != nil {
-		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprintf(w, "%s", err)
+		WriteError(w, r, err)
 		return
 	}
 	w.Write(buf)
@@ -82,8 +74,7 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
 	if err != nil {
-		log.Warnf("parse: %s", err)
-		w.WriteHeader(http.StatusBadRequest)
+		WriteError(w, r, err)
 		return
 	}
 
@@ -110,8 +101,7 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 
 			g, err = h.backend.Get(id)
 			if err != nil {
-				log.Warnf("get: %s: %s", id, err)
-				w.WriteHeader(http.StatusBadRequest)
+				WriteError(w, r, err)
 				return
 			}
 		}
@@ -119,8 +109,7 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 	} else {
 		err := json.NewDecoder(r.Body).Decode(req)
 		if err != nil {
-			log.Warnf("decode: %s", err)
-			w.WriteHeader(http.StatusBadRequest)
+			WriteError(w, r, err)
 			return
 		}
 		g.Text = req.Text
@@ -129,8 +118,7 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 		if req.Width != "" {
 			val, err := strconv.ParseInt(req.Width, 10, 32)
 			if err != nil {
-				log.Warnf("width: %s", err)
-				w.WriteHeader(http.StatusBadRequest)
+				WriteError(w, r, err)
 				return
 			}
 			g.Width = int(val)
@@ -138,58 +126,25 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 		if req.Height != "" {
 			val, err := strconv.ParseInt(req.Height, 10, 32)
 			if err != nil {
-				log.Warnf("height: %s", err)
-				w.WriteHeader(http.StatusBadRequest)
+				WriteError(w, r, err)
 				return
 			}
 			g.Height = int(val)
 		}
 	}
 
-	cmd_name, ok := SupportedFormats[req.Format]
-	if ok == false {
-		cmd_name = "dot"
-	}
-	cmdline := []string{
-		cmd_name, "-Tpng",
-	}
-
-	if g.Width > 0 && g.Height > 0 {
-		cmdline = append(cmdline, fmt.Sprintf("-Gsize=%d,%d!", g.Width, g.Height))
-		cmdline = append(cmdline, "-Gdpi=100")
-	}
-
-	if g.Text == "" {
-		log.Warnf("empty graph")
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
-	_, err = gographviz.Read([]byte(g.Text))
+	response, err := GraphvizImage(g)
 	if err != nil {
-		log.Warnf("graph: %s", err)
-		w.WriteHeader(http.StatusBadRequest)
+		WriteError(w, r, err)
 		return
 	}
 
-	response := bytes.NewBuffer(nil)
-	cmd := exec.Command(cmdline[0], cmdline[1:]...)
-	cmd.Stdin = bytes.NewBuffer([]byte(g.Text))
-	cmd.Stdout = response
-	err = cmd.Run()
-	if err != nil {
-		log.Warnf("%s [%s] - %s", cmdline, g.Text, err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	image := base64.StdEncoding.EncodeToString(response.Bytes())
+	image := base64.StdEncoding.EncodeToString(response)
 
 	if id == "" {
 		id, err = h.backend.Create(g)
 		if err != nil {
-			log.Warnf("%s - %s", cmdline, err)
-			w.WriteHeader(http.StatusInternalServerError)
+			WriteError(w, r, err)
 			return
 		}
 	}
@@ -203,6 +158,39 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(ret)
 
+}
+
+// get an image
+func (h *GraphvizHandler) Image(w http.ResponseWriter, r *http.Request) {
+
+	err := r.ParseForm()
+	if err != nil {
+		WriteError(w, r, err)
+		return
+	}
+
+	id := r.Form.Get("id")
+	if id == "" {
+		WriteError(w, r, err)
+		return
+	}
+
+	g, err := h.backend.Get(id)
+	if err != nil {
+		WriteError(w, r, err)
+		return
+	}
+
+	response, err := GraphvizImage(g)
+	if err != nil {
+		WriteError(w, r, err)
+		return
+	}
+
+	hdr := w.Header()
+	hdr.Set("Content-Type", "image/png")
+	hdr.Set("Content-Length", fmt.Sprintf("%d", len(response)))
+	w.Write(response)
 }
 
 func main() {
@@ -220,6 +208,7 @@ func main() {
 	mux.HandleFunc("/", svc.Index)
 	mux.HandleFunc("/static/", svc.Static)
 	mux.HandleFunc("/proc", svc.Proc)
+	mux.HandleFunc("/image", svc.Image)
 
 	handler := apachelog.NewHandler(mux, os.Stderr)
 	err = http.ListenAndServe(addr, handler)
