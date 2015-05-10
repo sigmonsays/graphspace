@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"path"
 	"strconv"
 
 	"github.com/sigmonsays/go-apachelog"
@@ -188,6 +189,15 @@ func (h *GraphvizHandler) Image(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		WriteError(w, r, err)
 		return
+	}
+
+	// let the extension used in the filename override the output type
+	ext := path.Ext(r.URL.Path)
+	if len(ext) > 0 {
+		ext = ext[1:]
+	}
+	if _, ok := Outputs[ext]; ok {
+		g.Output = ext
 	}
 
 	response, err := GraphvizImage(g)
