@@ -1,17 +1,12 @@
 package main
 
 import (
-	"crypto/md5"
 	"database/sql"
-	"encoding/base64"
 	"fmt"
 	"io"
-	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
 )
-
-var nb []byte
 
 const schema = `
 create table if not exists graphs (
@@ -23,24 +18,6 @@ create table if not exists graphs (
 	output text
 );
 `
-
-type Graph struct {
-	Format        string
-	Text          string
-	Width, Height int
-	Output        string
-}
-
-func (g *Graph) GetId() string {
-	h := md5.New()
-	io.WriteString(h, fmt.Sprintf("%d-%d", g.Width, g.Height))
-	io.WriteString(h, g.Format)
-	io.WriteString(h, g.Text)
-	io.WriteString(h, g.Output)
-	b64 := base64.URLEncoding.EncodeToString(h.Sum(nil))
-	return strings.Replace(b64, "=", "", -1)
-
-}
 
 type sqlGraphviz struct {
 	dbpath      string

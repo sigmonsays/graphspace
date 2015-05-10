@@ -2,11 +2,37 @@ package main
 
 import (
 	"bytes"
+	"crypto/md5"
+	"encoding/base64"
 	"fmt"
+	"io"
 	"os/exec"
+	"strings"
 
 	"github.com/awalterschulze/gographviz"
 )
+
+type Graph struct {
+	Format        string
+	Text          string
+	Width, Height int
+	Output        string
+}
+
+func (g *Graph) GetId() string {
+	h := md5.New()
+	io.WriteString(h, fmt.Sprintf("%d-%d", g.Width, g.Height))
+	io.WriteString(h, g.Format)
+	text := g.Text
+	if graph, err := gographviz.Read([]byte(g.Text)); err == nil {
+		text = graph.String()
+	}
+	io.WriteString(h, text)
+	io.WriteString(h, g.Output)
+	b64 := base64.URLEncoding.EncodeToString(h.Sum(nil))
+	return strings.Replace(b64, "=", "", -1)
+
+}
 
 var Outputs = map[string]string{
 	"png": "image/png",
