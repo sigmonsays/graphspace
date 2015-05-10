@@ -1,24 +1,57 @@
 <html>
 <head>
+<link rel="stylesheet" href="/static/jquery-ui.css">
+<style>
+body {
+      font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+      font-size: 82.5%;
+}
+</style>
+
 <script type="text/javascript" src="/static/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="/static/jquery-ui.js"></script>
 <title>graphspace - graphviz editor</title>
 </head>
 <body>
-<form id=form>
-   <input type=radio name=format value=dot checked=true> dot &nbsp; 
-   <input type=radio name=format value=neato> neato &nbsp; 
-   <input type=radio name=format value=twopi> twopi &nbsp; 
-   <input type=radio name=format value=circle> circle &nbsp; 
-   <input type=radio name=format value=fdp> fdp &nbsp; 
-   <input type=radio name=format value=sfdp> sfdp &nbsp; 
-   <input type=radio name=format value=patchwork> patchwork &nbsp; 
-   <br>
-   <textarea id=text name=text rows=15 cols=30>
-   </textarea>
-   <br>
+<div style="width: 80%;">
+<b>Graphspace</b> is a tool for building graphviz graphs &nbsp; 
+   - &nbsp; <a href="?id=example">example</a> &nbsp;
+   - &nbsp; <a href="?id=random">random</a> &nbsp;
+   - &nbsp; <a href="http://www.graphviz.org/Gallery.php">gallery</a> &nbsp;
+   - &nbsp; <a href="http://github.com/sigmonsays/graphspace">code</a> &nbsp;
+   - &nbsp;  
+</div>
+<p>
 
-<input class=update type=button name=btn value=Submit>
+<form id=form>
+<div id="tabs">
+   <ul>
+      <li><a href="#tabs-1">Editor</a></li>
+      <li><a href="#tabs-2">Settings</a></li>
+   </ul>
+   <div id="tabs-1">
+         <input type=radio name=format value=dot checked=true> dot &nbsp; 
+         <input type=radio name=format value=neato> neato &nbsp; 
+         <input type=radio name=format value=twopi> twopi &nbsp; 
+         <input type=radio name=format value=circle> circle &nbsp; 
+         <input type=radio name=format value=fdp> fdp &nbsp; 
+         <input type=radio name=format value=sfdp> sfdp &nbsp; 
+         <input type=radio name=format value=patchwork> patchwork &nbsp; 
+         <br>
+         <textarea style="width: 80%;" id=text name=text rows=15 cols=50></textarea>
+         <br>
+
+      <br>
+   </div>
+   <div id="tabs-2">
+      Width <input type=text name=width value=150 size=4> <p>
+      Height <input type=text name=height value=150 size=4> <p>
+
+   </div>
+</div>
 <br>
+<input class=update type=button name=btn value="Update Graph">
+<hr>
 </form>
 
 <div id=link></div>
@@ -40,6 +73,8 @@ function getUrlParameter(sParam)
 }         
 
 $(function() {
+ $('#tabs').tabs()
+
  $('.update').click(function(){
 
    $.ajax({

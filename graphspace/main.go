@@ -80,14 +80,31 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 	var g *Graph
 
 	if id != "" {
-		g, err = h.backend.Get(id)
-		if err != nil {
-			log.Warnf("get: %s: %s", id, err)
-			w.WriteHeader(http.StatusBadRequest)
-			return
+
+		if id == "example" {
+			g = &Graph{
+				Id:   "example",
+				Text: Example,
+			}
+			graph_string = g.Text
+
+		} else if id == "random" {
+			graph_string = RandomGraph()
+			g = &Graph{
+				Text: graph_string,
+			}
+
+		} else {
+
+			g, err = h.backend.Get(id)
+			if err != nil {
+				log.Warnf("get: %s: %s", id, err)
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+			graph_string = g.Text
+			format = g.Format
 		}
-		graph_string = g.Text
-		format = g.Format
 
 	} else {
 		req, err := ioutil.ReadAll(r.Body)

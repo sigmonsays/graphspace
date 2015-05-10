@@ -77,6 +77,492 @@ func static_jquery_1_11_2_min_js() (*asset, error) {
 	return a, err
 }
 
+// static_jquery_ui_css reads file data from disk. It returns an error on failure.
+func static_jquery_ui_css() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-ui.css"
+	name := "static/jquery-ui.css"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_jquery_ui_js reads file data from disk. It returns an error on failure.
+func static_jquery_ui_js() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-ui.js"
+	name := "static/jquery-ui.js"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_diagonals_thick_18_b81900_40x40_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_diagonals_thick_18_b81900_40x40_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_diagonals-thick_18_b81900_40x40.png"
+	name := "static/images/ui-bg_diagonals-thick_18_b81900_40x40.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_diagonals_thick_20_666666_40x40_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_diagonals_thick_20_666666_40x40_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_diagonals-thick_20_666666_40x40.png"
+	name := "static/images/ui-bg_diagonals-thick_20_666666_40x40.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_flat_0_aaaaaa_40x100_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_flat_0_aaaaaa_40x100_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_flat_0_aaaaaa_40x100.png"
+	name := "static/images/ui-bg_flat_0_aaaaaa_40x100.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_flat_10_000000_40x100_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_flat_10_000000_40x100_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_flat_10_000000_40x100.png"
+	name := "static/images/ui-bg_flat_10_000000_40x100.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_flat_75_ffffff_40x100_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_flat_75_ffffff_40x100_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_flat_75_ffffff_40x100.png"
+	name := "static/images/ui-bg_flat_75_ffffff_40x100.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_glass_100_f6f6f6_1x400_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_glass_100_f6f6f6_1x400_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_100_f6f6f6_1x400.png"
+	name := "static/images/ui-bg_glass_100_f6f6f6_1x400.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_glass_100_fdf5ce_1x400_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_glass_100_fdf5ce_1x400_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_100_fdf5ce_1x400.png"
+	name := "static/images/ui-bg_glass_100_fdf5ce_1x400.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_glass_55_fbf9ee_1x400_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_glass_55_fbf9ee_1x400_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_55_fbf9ee_1x400.png"
+	name := "static/images/ui-bg_glass_55_fbf9ee_1x400.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_glass_65_ffffff_1x400_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_glass_65_ffffff_1x400_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_65_ffffff_1x400.png"
+	name := "static/images/ui-bg_glass_65_ffffff_1x400.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_glass_75_dadada_1x400_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_glass_75_dadada_1x400_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_75_dadada_1x400.png"
+	name := "static/images/ui-bg_glass_75_dadada_1x400.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_glass_75_e6e6e6_1x400_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_glass_75_e6e6e6_1x400_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_75_e6e6e6_1x400.png"
+	name := "static/images/ui-bg_glass_75_e6e6e6_1x400.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_glass_95_fef1ec_1x400_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_glass_95_fef1ec_1x400_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_95_fef1ec_1x400.png"
+	name := "static/images/ui-bg_glass_95_fef1ec_1x400.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_gloss_wave_35_f6a828_500x100_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_gloss_wave_35_f6a828_500x100_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_gloss-wave_35_f6a828_500x100.png"
+	name := "static/images/ui-bg_gloss-wave_35_f6a828_500x100.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_highlight_soft_100_eeeeee_1x100_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_highlight_soft_100_eeeeee_1x100_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_highlight-soft_100_eeeeee_1x100.png"
+	name := "static/images/ui-bg_highlight-soft_100_eeeeee_1x100.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_highlight_soft_75_cccccc_1x100_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_highlight_soft_75_cccccc_1x100_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_highlight-soft_75_cccccc_1x100.png"
+	name := "static/images/ui-bg_highlight-soft_75_cccccc_1x100.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_bg_highlight_soft_75_ffe45c_1x100_png reads file data from disk. It returns an error on failure.
+func static_images_ui_bg_highlight_soft_75_ffe45c_1x100_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_highlight-soft_75_ffe45c_1x100.png"
+	name := "static/images/ui-bg_highlight-soft_75_ffe45c_1x100.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_icons_222222_256x240_png reads file data from disk. It returns an error on failure.
+func static_images_ui_icons_222222_256x240_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_222222_256x240.png"
+	name := "static/images/ui-icons_222222_256x240.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_icons_228ef1_256x240_png reads file data from disk. It returns an error on failure.
+func static_images_ui_icons_228ef1_256x240_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_228ef1_256x240.png"
+	name := "static/images/ui-icons_228ef1_256x240.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_icons_2e83ff_256x240_png reads file data from disk. It returns an error on failure.
+func static_images_ui_icons_2e83ff_256x240_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_2e83ff_256x240.png"
+	name := "static/images/ui-icons_2e83ff_256x240.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_icons_454545_256x240_png reads file data from disk. It returns an error on failure.
+func static_images_ui_icons_454545_256x240_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_454545_256x240.png"
+	name := "static/images/ui-icons_454545_256x240.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_icons_888888_256x240_png reads file data from disk. It returns an error on failure.
+func static_images_ui_icons_888888_256x240_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_888888_256x240.png"
+	name := "static/images/ui-icons_888888_256x240.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_icons_cd0a0a_256x240_png reads file data from disk. It returns an error on failure.
+func static_images_ui_icons_cd0a0a_256x240_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_cd0a0a_256x240.png"
+	name := "static/images/ui-icons_cd0a0a_256x240.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_icons_ef8c08_256x240_png reads file data from disk. It returns an error on failure.
+func static_images_ui_icons_ef8c08_256x240_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_ef8c08_256x240.png"
+	name := "static/images/ui-icons_ef8c08_256x240.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_icons_ffd27a_256x240_png reads file data from disk. It returns an error on failure.
+func static_images_ui_icons_ffd27a_256x240_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_ffd27a_256x240.png"
+	name := "static/images/ui-icons_ffd27a_256x240.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
+// static_images_ui_icons_ffffff_256x240_png reads file data from disk. It returns an error on failure.
+func static_images_ui_icons_ffffff_256x240_png() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_ffffff_256x240.png"
+	name := "static/images/ui-icons_ffffff_256x240.png"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
 // Asset loads and returns the asset for the given name.
 // It returns an error if the asset could not be found or
 // could not be loaded.
@@ -132,6 +618,33 @@ var _bindata = map[string]func() (*asset, error){
 	"static/index.html": static_index_html,
 	"static/jquery-1.11.2.js": static_jquery_1_11_2_js,
 	"static/jquery-1.11.2.min.js": static_jquery_1_11_2_min_js,
+	"static/jquery-ui.css": static_jquery_ui_css,
+	"static/jquery-ui.js": static_jquery_ui_js,
+	"static/images/ui-bg_diagonals-thick_18_b81900_40x40.png": static_images_ui_bg_diagonals_thick_18_b81900_40x40_png,
+	"static/images/ui-bg_diagonals-thick_20_666666_40x40.png": static_images_ui_bg_diagonals_thick_20_666666_40x40_png,
+	"static/images/ui-bg_flat_0_aaaaaa_40x100.png": static_images_ui_bg_flat_0_aaaaaa_40x100_png,
+	"static/images/ui-bg_flat_10_000000_40x100.png": static_images_ui_bg_flat_10_000000_40x100_png,
+	"static/images/ui-bg_flat_75_ffffff_40x100.png": static_images_ui_bg_flat_75_ffffff_40x100_png,
+	"static/images/ui-bg_glass_100_f6f6f6_1x400.png": static_images_ui_bg_glass_100_f6f6f6_1x400_png,
+	"static/images/ui-bg_glass_100_fdf5ce_1x400.png": static_images_ui_bg_glass_100_fdf5ce_1x400_png,
+	"static/images/ui-bg_glass_55_fbf9ee_1x400.png": static_images_ui_bg_glass_55_fbf9ee_1x400_png,
+	"static/images/ui-bg_glass_65_ffffff_1x400.png": static_images_ui_bg_glass_65_ffffff_1x400_png,
+	"static/images/ui-bg_glass_75_dadada_1x400.png": static_images_ui_bg_glass_75_dadada_1x400_png,
+	"static/images/ui-bg_glass_75_e6e6e6_1x400.png": static_images_ui_bg_glass_75_e6e6e6_1x400_png,
+	"static/images/ui-bg_glass_95_fef1ec_1x400.png": static_images_ui_bg_glass_95_fef1ec_1x400_png,
+	"static/images/ui-bg_gloss-wave_35_f6a828_500x100.png": static_images_ui_bg_gloss_wave_35_f6a828_500x100_png,
+	"static/images/ui-bg_highlight-soft_100_eeeeee_1x100.png": static_images_ui_bg_highlight_soft_100_eeeeee_1x100_png,
+	"static/images/ui-bg_highlight-soft_75_cccccc_1x100.png": static_images_ui_bg_highlight_soft_75_cccccc_1x100_png,
+	"static/images/ui-bg_highlight-soft_75_ffe45c_1x100.png": static_images_ui_bg_highlight_soft_75_ffe45c_1x100_png,
+	"static/images/ui-icons_222222_256x240.png": static_images_ui_icons_222222_256x240_png,
+	"static/images/ui-icons_228ef1_256x240.png": static_images_ui_icons_228ef1_256x240_png,
+	"static/images/ui-icons_2e83ff_256x240.png": static_images_ui_icons_2e83ff_256x240_png,
+	"static/images/ui-icons_454545_256x240.png": static_images_ui_icons_454545_256x240_png,
+	"static/images/ui-icons_888888_256x240.png": static_images_ui_icons_888888_256x240_png,
+	"static/images/ui-icons_cd0a0a_256x240.png": static_images_ui_icons_cd0a0a_256x240_png,
+	"static/images/ui-icons_ef8c08_256x240.png": static_images_ui_icons_ef8c08_256x240_png,
+	"static/images/ui-icons_ffd27a_256x240.png": static_images_ui_icons_ffd27a_256x240_png,
+	"static/images/ui-icons_ffffff_256x240.png": static_images_ui_icons_ffffff_256x240_png,
 }
 
 // AssetDir returns the file names below a certain
@@ -175,11 +688,67 @@ type _bintree_t struct {
 }
 var _bintree = &_bintree_t{nil, map[string]*_bintree_t{
 	"static": &_bintree_t{nil, map[string]*_bintree_t{
+		"images": &_bintree_t{nil, map[string]*_bintree_t{
+			"ui-bg_diagonals-thick_18_b81900_40x40.png": &_bintree_t{static_images_ui_bg_diagonals_thick_18_b81900_40x40_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_diagonals-thick_20_666666_40x40.png": &_bintree_t{static_images_ui_bg_diagonals_thick_20_666666_40x40_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_flat_0_aaaaaa_40x100.png": &_bintree_t{static_images_ui_bg_flat_0_aaaaaa_40x100_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_flat_10_000000_40x100.png": &_bintree_t{static_images_ui_bg_flat_10_000000_40x100_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_flat_75_ffffff_40x100.png": &_bintree_t{static_images_ui_bg_flat_75_ffffff_40x100_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_glass_100_f6f6f6_1x400.png": &_bintree_t{static_images_ui_bg_glass_100_f6f6f6_1x400_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_glass_100_fdf5ce_1x400.png": &_bintree_t{static_images_ui_bg_glass_100_fdf5ce_1x400_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_glass_55_fbf9ee_1x400.png": &_bintree_t{static_images_ui_bg_glass_55_fbf9ee_1x400_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_glass_65_ffffff_1x400.png": &_bintree_t{static_images_ui_bg_glass_65_ffffff_1x400_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_glass_75_dadada_1x400.png": &_bintree_t{static_images_ui_bg_glass_75_dadada_1x400_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_glass_75_e6e6e6_1x400.png": &_bintree_t{static_images_ui_bg_glass_75_e6e6e6_1x400_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_glass_95_fef1ec_1x400.png": &_bintree_t{static_images_ui_bg_glass_95_fef1ec_1x400_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_gloss-wave_35_f6a828_500x100.png": &_bintree_t{static_images_ui_bg_gloss_wave_35_f6a828_500x100_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_highlight-soft_100_eeeeee_1x100.png": &_bintree_t{static_images_ui_bg_highlight_soft_100_eeeeee_1x100_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_highlight-soft_75_cccccc_1x100.png": &_bintree_t{static_images_ui_bg_highlight_soft_75_cccccc_1x100_png, map[string]*_bintree_t{
+			}},
+			"ui-bg_highlight-soft_75_ffe45c_1x100.png": &_bintree_t{static_images_ui_bg_highlight_soft_75_ffe45c_1x100_png, map[string]*_bintree_t{
+			}},
+			"ui-icons_222222_256x240.png": &_bintree_t{static_images_ui_icons_222222_256x240_png, map[string]*_bintree_t{
+			}},
+			"ui-icons_228ef1_256x240.png": &_bintree_t{static_images_ui_icons_228ef1_256x240_png, map[string]*_bintree_t{
+			}},
+			"ui-icons_2e83ff_256x240.png": &_bintree_t{static_images_ui_icons_2e83ff_256x240_png, map[string]*_bintree_t{
+			}},
+			"ui-icons_454545_256x240.png": &_bintree_t{static_images_ui_icons_454545_256x240_png, map[string]*_bintree_t{
+			}},
+			"ui-icons_888888_256x240.png": &_bintree_t{static_images_ui_icons_888888_256x240_png, map[string]*_bintree_t{
+			}},
+			"ui-icons_cd0a0a_256x240.png": &_bintree_t{static_images_ui_icons_cd0a0a_256x240_png, map[string]*_bintree_t{
+			}},
+			"ui-icons_ef8c08_256x240.png": &_bintree_t{static_images_ui_icons_ef8c08_256x240_png, map[string]*_bintree_t{
+			}},
+			"ui-icons_ffd27a_256x240.png": &_bintree_t{static_images_ui_icons_ffd27a_256x240_png, map[string]*_bintree_t{
+			}},
+			"ui-icons_ffffff_256x240.png": &_bintree_t{static_images_ui_icons_ffffff_256x240_png, map[string]*_bintree_t{
+			}},
+		}},
 		"index.html": &_bintree_t{static_index_html, map[string]*_bintree_t{
 		}},
 		"jquery-1.11.2.js": &_bintree_t{static_jquery_1_11_2_js, map[string]*_bintree_t{
 		}},
 		"jquery-1.11.2.min.js": &_bintree_t{static_jquery_1_11_2_min_js, map[string]*_bintree_t{
+		}},
+		"jquery-ui.css": &_bintree_t{static_jquery_ui_css, map[string]*_bintree_t{
+		}},
+		"jquery-ui.js": &_bintree_t{static_jquery_ui_js, map[string]*_bintree_t{
 		}},
 	}},
 }}
