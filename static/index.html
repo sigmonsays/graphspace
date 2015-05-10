@@ -95,11 +95,12 @@ function getUrlParameter(sParam)
 }         
 
 function updateImage(data) {
+   var img_url = '/image/graph.' + data.output + '?id=' + data.id
    var link_text = '<a href="?id=' + data.id + '">share<a/>'
-   link_text += '&nbsp; <a href="/image/graph.' + data.output + '?id=' + data.id + '">image<a/>'
+   link_text += '&nbsp; <a href="' + img_url + '">image<a/>'
    $('#link').html(link_text)
 
-   $('#graph').html('<img src="data:' + data.content_type + ';base64,' + data.image + '"/>')
+   $('#graph').html('<a href="' + img_url + '"><img src="data:' + data.content_type + ';base64,' + data.image + '"/></a>')
    $('#text').val(data.text)
 
    if (data.format) {
