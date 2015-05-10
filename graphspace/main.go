@@ -92,10 +92,12 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 				Format: "dot",
 				Text:   Example,
 			}
+			id = g.GetId()
 
 		} else if id == "random" {
 			g.Format = req.Format
 			g.Text = RandomGraph()
+			id = g.GetId()
 
 		} else {
 
@@ -141,12 +143,12 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 
 	image := base64.StdEncoding.EncodeToString(response)
 
+	id, err = h.backend.Create(g)
+	if err != nil {
+		log.Infof("create %s: %s", id, err)
+	}
 	if id == "" {
-		id, err = h.backend.Create(g)
-		if err != nil {
-			WriteError(w, r, err)
-			return
-		}
+		id = g.GetId()
 	}
 
 	ret := &Response{
