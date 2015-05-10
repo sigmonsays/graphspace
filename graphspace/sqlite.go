@@ -1,11 +1,12 @@
 package main
 
 import (
-	"crypto/sha1"
+	"crypto/md5"
 	"database/sql"
 	"encoding/base64"
 	"fmt"
 	"io"
+	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -24,7 +25,6 @@ create table if not exists graphs (
 `
 
 type Graph struct {
-	Id            string
 	Format        string
 	Text          string
 	Width, Height int
@@ -32,12 +32,14 @@ type Graph struct {
 }
 
 func (g *Graph) GetId() string {
-	h := sha1.New()
+	h := md5.New()
 	io.WriteString(h, fmt.Sprintf("%d-%d", g.Width, g.Height))
 	io.WriteString(h, g.Format)
 	io.WriteString(h, g.Text)
 	io.WriteString(h, g.Output)
-	return base64.StdEncoding.EncodeToString(h.Sum(nil))
+	b64 := base64.URLEncoding.EncodeToString(h.Sum(nil))
+	return strings.Replace(b64, "=", "", -1)
+
 }
 
 type sqlGraphviz struct {
@@ -119,9 +121,7 @@ func (q *sqlGraphviz) Get(id string) (*Graph, error) {
 		return nil, io.EOF
 	}
 
-	g := &Graph{
-		Id: id,
-	}
+	g := &Graph{}
 
 	err := row.Scan(&g.Format, &g.Text, &g.Width, &g.Height, &g.Output)
 	if err == sql.ErrNoRows {
