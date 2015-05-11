@@ -5,3 +5,4 @@ graphspace - graphviz workspace tool for making dot graphs
 - saves graphs in sqlite for easy sharing
 - configurable output image size
 - all graph layouts supported
+- simple on disk cache to improve load time
