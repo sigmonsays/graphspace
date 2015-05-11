@@ -6,10 +6,41 @@ body {
       font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
       font-size: 82.5%;
 }
+
+/*  SECTIONS  */
+.section {
+   clear: both;
+   padding: 0px;
+   margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.col {
+   display: block;
+   float:left;
+   margin: 1% 0 1% 1.6%;
+}
+.col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 480px) {
+   .col {  margin: 1% 0 1% 0%; }
+   .span_1_of_4, .span_2_of_4, .span_3_of_4, .span_4_of_4 { width: 100%; }
+}
+
+
+
 </style>
 
 <script type="text/javascript" src="/static/jquery-1.11.2.js"></script>
 <script type="text/javascript" src="/static/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/app.js"></script>
 <title>graphspace - graphviz editor</title>
 </head>
 <body>
@@ -27,6 +58,7 @@ body {
    <ul>
       <li><a href="#tabs-1">Editor</a></li>
       <li><a href="#tabs-2">Settings</a></li>
+      <li><a href="#tabs-3">Recent</a></li>
    </ul>
    <div id="tabs-1">
          <input type=radio name=format value=dot checked=true> dot &nbsp; 
@@ -54,6 +86,9 @@ body {
          <input type=radio name=output value=svg> SVG &nbsp; 
 
    </div>
+   <div id="tabs-3">
+      <div id="recent" class="section group"></div>
+   </div>
 </div>
 <br>
 <input class=update type=button name=btn value="Update Graph">
@@ -63,64 +98,15 @@ body {
 <div id=graph>click submit to update image</div>
 
 <script>
-$.fn.serializeObject = function()
-{
-    var o = {};
-    var a = this.serializeArray();
-    $.each(a, function() {
-        if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-    return o;
-};
-
-
-function getUrlParameter(sParam)
-{
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++) 
-    {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) 
-        {
-            return sParameterName[1];
-        }
-    }
-}         
-
-function updateImage(data) {
-   var img_url = '/image/graph.' + data.output + '?id=' + data.id
-   var link_text = '<a href="?id=' + data.id + '">share<a/>'
-   link_text += '&nbsp; <a href="' + img_url + '">image<a/>'
-   $('#link').html(link_text)
-
-   $('#graph').html('<a href="' + img_url + '"><img src="data:' + data.content_type + ';base64,' + data.image + '"/></a>')
-   $('#text').val(data.text)
-   $('#description').val(data.description)
-
-
-   if (data.format) {
-      $("#form input[name='format'][value=" + data.format + "]").attr('checked', 'checked')
-   }
-   if (data.output) {
-      $("#form input[name='output'][value=" + data.output + "]").attr('checked', 'checked')
-   }
-}
 
 $(function() {
  $('#tabs').tabs({
     collapsible: true
  })
 
- $('.update').click(function(){
+ refreshRecent()
 
+ $('.update').click(function(){
    $.ajax({
       type: "POST",
       url: "/proc",

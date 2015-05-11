@@ -23,6 +23,24 @@ type asset struct {
 	info  os.FileInfo
 }
 
+// static_app_js reads file data from disk. It returns an error on failure.
+func static_app_js() (*asset, error) {
+	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/app.js"
+	name := "static/app.js"
+	bytes, err := bindata_read(path, name)
+	if err != nil {
+		return nil, err
+	}
+
+	fi, err := os.Stat(path)
+	if err != nil {
+		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+	}
+
+	a := &asset{bytes: bytes, info: fi}
+	return a, err
+}
+
 // static_index_html reads file data from disk. It returns an error on failure.
 func static_index_html() (*asset, error) {
 	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/index.html"
@@ -615,6 +633,7 @@ func AssetNames() []string {
 
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
+	"static/app.js": static_app_js,
 	"static/index.html": static_index_html,
 	"static/jquery-1.11.2.js": static_jquery_1_11_2_js,
 	"static/jquery-1.11.2.min.js": static_jquery_1_11_2_min_js,
@@ -688,6 +707,8 @@ type _bintree_t struct {
 }
 var _bintree = &_bintree_t{nil, map[string]*_bintree_t{
 	"static": &_bintree_t{nil, map[string]*_bintree_t{
+		"app.js": &_bintree_t{static_app_js, map[string]*_bintree_t{
+		}},
 		"images": &_bintree_t{nil, map[string]*_bintree_t{
 			"ui-bg_diagonals-thick_18_b81900_40x40.png": &_bintree_t{static_images_ui_bg_diagonals_thick_18_b81900_40x40_png, map[string]*_bintree_t{
 			}},
