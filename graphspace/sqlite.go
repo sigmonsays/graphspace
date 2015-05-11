@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"io"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -11,6 +12,7 @@ import (
 const schema = `
 create table if not exists graphs (
 	id text not null primary key, 
+	created int, 
 	format text, 
 	text text,
 	width int, 
@@ -21,11 +23,9 @@ create table if not exists graphs (
 `
 
 type sqlGraphviz struct {
-	dbpath      string
-	db          *sql.DB
-	stmt_insert *sql.Stmt
-	stmt_select *sql.Stmt
-	stmt_delete *sql.Stmt
+	dbpath string
+	db     *sql.DB
+	stmt   map[string]*sql.Stmt
 }
 
 // prepare the database for usage
@@ -55,27 +55,29 @@ func NewSqlGraphviz(dbpath string) (*sqlGraphviz, error) {
 		return nil, err
 	}
 
-	stmt_insert, err := db.Prepare("insert into graphs (id, format, text, width, height, output, description) values(?, ?, ?, ?, ?, ?, ?)")
-	if err != nil {
-		return nil, err
+	stmt := make(map[string]*sql.Stmt, 0)
+	queries := map[string]string{
+		"insert":      "insert into graphs (id, created, format, text, width, height, output, description) values(?, ?, ?, ?, ?, ?, ?, ?)",
+		"select":      "select format, text, width, height, output, description from graphs where id = ?",
+		"delete":      "delete from graphs where id = ?",
+		"list_recent": "select id, description from graphs order by created desc limit ?",
+	}
+	for name, sql := range queries {
+		st, err := db.Prepare(sql)
+		if err != nil {
+			return nil, err
+		}
+		stmt[name] = st
 	}
 
-	stmt_select, err := db.Prepare("select format, text, width, height, output, description from graphs where id = ?")
-	if err != nil {
-		return nil, err
-	}
-
-	stmt_delete, err := db.Prepare("delete from graphs where id = ?")
 	if err != nil {
 		return nil, err
 	}
 
 	q := &sqlGraphviz{
-		db:          db,
-		dbpath:      dbpath,
-		stmt_insert: stmt_insert,
-		stmt_select: stmt_select,
-		stmt_delete: stmt_delete,
+		db:     db,
+		dbpath: dbpath,
+		stmt:   stmt,
 	}
 	return q, nil
 }
@@ -85,7 +87,9 @@ func (q *sqlGraphviz) Create(g *Graph) (string, error) {
 	id := g.GetId()
 	log.Tracef("graph id=%s", id)
 
-	_, err := q.stmt_insert.Exec(id, g.Format, g.Text, g.Width, g.Height, g.Output, g.Description)
+	t := time.Now().Unix()
+
+	_, err := q.stmt["insert"].Exec(id, t, g.Format, g.Text, g.Width, g.Height, g.Output, g.Description)
 	if err != nil {
 		return "", err
 	}
@@ -94,7 +98,7 @@ func (q *sqlGraphviz) Create(g *Graph) (string, error) {
 }
 
 func (q *sqlGraphviz) Get(id string) (*Graph, error) {
-	row := q.stmt_select.QueryRow(id)
+	row := q.stmt["select"].QueryRow(id)
 	if row == nil {
 		return nil, io.EOF
 	}
@@ -111,8 +115,34 @@ func (q *sqlGraphviz) Get(id string) (*Graph, error) {
 	return g, nil
 }
 
+func (q *sqlGraphviz) ListRecent(max int) ([]listEntry, error) {
+	ls := make([]listEntry, 0)
+	rows, err := q.stmt["list_recent"].Query(max)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		e := listEntry{}
+		err := rows.Scan(&e.Id, &e.Description)
+		if err != nil {
+			log.Warnf("scan %s", err)
+			continue
+		}
+		ls = append(ls, e)
+	}
+
+	err = rows.Err()
+	if err != nil {
+		return nil, err
+	}
+
+	return ls, nil
+
+}
+
 func (q *sqlGraphviz) Delete(id string) error {
-	_, err := q.stmt_delete.Exec(id)
+	_, err := q.stmt["delete"].Exec(id)
 	if err != nil {
 		return err
 	}
