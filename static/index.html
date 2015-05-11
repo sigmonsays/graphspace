@@ -91,7 +91,8 @@ body {
    </div>
 </div>
 <br>
-<input class=update type=button name=btn value="Update Graph">
+<input class=update type=button name=btn value="Update Graph"> &nbsp;
+<input class=save type=button name=btn value="Save">
 </form>
 
 <div id=link></div>
@@ -99,29 +100,22 @@ body {
 
 <script>
 
-$(function() {
- $('#tabs').tabs({
-    collapsible: true
- })
-
- refreshRecent()
-
- $('.update').click(function(){
+function submitImage(btn) {
+   var data = $('#form').serializeObject()
+   data['btn']=btn
    $.ajax({
       type: "POST",
       url: "/proc",
       contentType: "image/png",
       dataType: "json",
-      data: JSON.stringify($('#form').serializeObject()),
+      data: JSON.stringify(data),
       success: function(data) {
          updateImage(data)
       }
    })
-   return false;
- });
+}
 
- id = getUrlParameter("id")
- if (id) {
+function loadImage(id) {
    $.ajax({
       type: "POST",
       url: "/proc?format=" + $("#form input[name='format']:checked").val() + "&id=" + id,
@@ -131,9 +125,29 @@ $(function() {
          updateImage(data)
       }
    })
-    
- }
+}
 
+$(function() {
+ $('#tabs').tabs({
+    collapsible: true
+ })
+
+ refreshRecent()
+
+ $('.update').click(function(){
+   submitImage('update')
+   return false;
+ });
+
+ $('.save').click(function(){
+   submitImage('save')
+   return false;
+ });
+
+ id = getUrlParameter("id")
+ if (id) {
+    loadImage(id)
+ }
 
 });
 </script>

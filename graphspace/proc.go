@@ -54,6 +54,7 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 			WriteError(w, r, err)
 			return
 		}
+		log.Tracef("request %#v", req)
 		g.Text = req.Text
 		g.Format = req.Format
 
@@ -86,10 +87,13 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 
 	image := base64.StdEncoding.EncodeToString(response.Bytes)
 
-	id, err = h.backend.Create(g)
-	if err != nil {
-		log.Infof("create %s: %s", id, err)
+	if req.Button == "save" {
+		id, err = h.backend.Create(g)
+		if err != nil {
+			log.Infof("create %s: %s", id, err)
+		}
 	}
+
 	if id == "" {
 		id = g.GetId()
 	}

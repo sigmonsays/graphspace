@@ -14,6 +14,7 @@ import (
 )
 
 type Request struct {
+	Button        string `json:"btn"`
 	Format        string
 	Text          string
 	Width, Height string
