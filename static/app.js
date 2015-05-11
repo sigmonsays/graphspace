@@ -50,6 +50,17 @@ function updateImage(data) {
    }
 }
 
+function deleteImage(id) {
+   $.ajax({
+      type: "POST",
+      url: "/api/delete?id=" + id,
+      dataType: "json",
+      success: function(data) {
+         $('#img-' + id).hide()
+      }
+   })
+}
+
 function refreshRecent() {
    $.ajax({
       type: "GET",
@@ -61,10 +72,14 @@ function refreshRecent() {
             if (this.description == '') {
                this.description = '<i>no description</i>'
             }
-            var v = "<div class='col' style='text-align: center;'>"
-            v += "<a href='?id=" + this.id + "'>" + this.description + "<br>"
-            v += "<img width=150 height=150 src='/image/graph.png?id=" + this.id + "'/>"
-            v += "</a></div>"
+            var delete_cmd = 'javascript:deleteImage("' + this.id + '");'
+            var v = "<div id='img-" + this.id + "' class='col' style='text-align: center;'>"
+            v += "<a href='?id=" + this.id + "'>" + this.description  + "</a>"
+            v += " &nbsp; <a href='" + delete_cmd + "'>X</a><br>"
+
+            v += "<a href='?id=" + this.id + "'>"
+            v += "<img width=150 height=150 src='/image/graph.png?id=" + this.id + "'/></a>"
+            v += "</div>"
             buf += v
          })
          $('#recent').html(buf)

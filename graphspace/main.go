@@ -109,6 +109,7 @@ func main() {
 	mux.HandleFunc("/proc", svc.Proc)
 	mux.HandleFunc("/image/", svc.Image)
 	mux.HandleFunc("/api/list", svc.List)
+	mux.HandleFunc("/api/delete", svc.Delete)
 
 	handler := apachelog.NewHandler(mux, os.Stderr)
 	err = http.ListenAndServe(addr, handler)
