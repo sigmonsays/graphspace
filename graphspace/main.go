@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/sigmonsays/go-apachelog"
 	gologging "github.com/sigmonsays/go-logging"
@@ -82,10 +83,13 @@ func (h *GraphvizHandler) Static(w http.ResponseWriter, r *http.Request) {
 func main() {
 	gologging.SetLogLevel("trace")
 	addr := ":7001"
-	dbpath := "/tmp/graphspace.db"
+	datapath := "/tmp/graphspace"
 	flag.StringVar(&addr, "addr", addr, "http server address")
-	flag.StringVar(&dbpath, "dbpath", dbpath, "database path")
+	flag.StringVar(&datapath, "data", datapath, "data path")
 	flag.Parse()
+
+	os.MkdirAll(datapath, 0755)
+	dbpath := filepath.Join(datapath, "graphspace.db")
 
 	svc, err := NewGraphvizHandler(dbpath)
 	if err != nil {
