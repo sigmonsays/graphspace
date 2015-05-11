@@ -29,8 +29,9 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 
 		if id == "example" {
 			g = &Graph{
-				Format: "dot",
-				Text:   Example,
+				Format:      "dot",
+				Description: "OS process state",
+				Text:        Example,
 			}
 			id = g.GetId()
 
