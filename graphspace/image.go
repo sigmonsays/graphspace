@@ -78,7 +78,7 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 		g.Description = req.Description
 	}
 
-	response, err := GraphvizImage(g)
+	response, err := h.builder.GraphvizImage(g)
 	if err != nil {
 		WriteError(w, r, err)
 		return
@@ -142,7 +142,7 @@ func (h *GraphvizHandler) Image(w http.ResponseWriter, r *http.Request) {
 		g.Output = ext
 	}
 
-	response, err := GraphvizImage(g)
+	response, err := h.builder.GraphvizImage(g)
 	if err != nil {
 		WriteError(w, r, err)
 		return

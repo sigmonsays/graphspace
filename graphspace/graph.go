@@ -6,7 +6,10 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
+	"io/ioutil"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/awalterschulze/gographviz"
@@ -56,7 +59,52 @@ type Image struct {
 	Bytes       []byte
 }
 
-func GraphvizImage(g *Graph) (*Image, error) {
+type GraphBuilder struct {
+	cachepath string
+}
+
+func NewGraphBuilder(cachepath string) *GraphBuilder {
+	return &GraphBuilder{cachepath}
+}
+
+func (b *GraphBuilder) GraphvizImage(g *Graph) (*Image, error) {
+
+	bname := fmt.Sprintf("%s.%s", g.GetId(), g.Output)
+	cachepath := filepath.Join(b.cachepath, bname)
+	st, err := os.Stat(cachepath)
+	if err == nil && st.IsDir() == false {
+		buf, err := ioutil.ReadFile(cachepath)
+		if err != nil {
+			return nil, err
+		}
+
+		content_type, ok := Outputs[g.Output]
+		if ok == false {
+			g.Output = "png"
+			content_type = Outputs[g.Output]
+		}
+		ret := &Image{
+			Bytes:       buf,
+			ContentType: content_type,
+		}
+		return ret, nil
+	}
+
+	image, err := b.BuildImage(g)
+	if err != nil {
+		return nil, err
+	}
+
+	// update cache
+	err = ioutil.WriteFile(cachepath, image.Bytes, 0744)
+	if err != nil {
+		return nil, err
+	}
+
+	return image, nil
+}
+
+func (b *GraphBuilder) BuildImage(g *Graph) (*Image, error) {
 	var err error
 	cmd_name, ok := SupportedFormats[g.Format]
 	if ok == false {

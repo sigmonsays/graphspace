@@ -32,6 +32,7 @@ type Response struct {
 }
 type GraphvizHandler struct {
 	backend *sqlGraphviz
+	builder *GraphBuilder
 }
 
 func WriteResponse(w http.ResponseWriter, r *http.Request, reply interface{}) {
@@ -47,13 +48,14 @@ func WriteError(w http.ResponseWriter, r *http.Request, err error) {
 	fmt.Fprintf(w, "%s", err)
 }
 
-func NewGraphvizHandler(dbpath string) (*GraphvizHandler, error) {
+func NewGraphvizHandler(dbpath string, builder *GraphBuilder) (*GraphvizHandler, error) {
 	backend, err := NewSqlGraphviz(dbpath)
 	if err != nil {
 		return nil, err
 	}
 	gr := &GraphvizHandler{
 		backend: backend,
+		builder: builder,
 	}
 	return gr, nil
 }
@@ -90,8 +92,12 @@ func main() {
 
 	os.MkdirAll(datapath, 0755)
 	dbpath := filepath.Join(datapath, "graphspace.db")
+	cachepath := filepath.Join(datapath, "cache")
+	os.MkdirAll(cachepath, 0755)
 
-	svc, err := NewGraphvizHandler(dbpath)
+	builder := NewGraphBuilder(cachepath)
+
+	svc, err := NewGraphvizHandler(dbpath, builder)
 	if err != nil {
 		panic(err)
 	}
