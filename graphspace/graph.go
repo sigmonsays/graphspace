@@ -68,6 +68,11 @@ func NewGraphBuilder(cachepath string) *GraphBuilder {
 }
 
 func (b *GraphBuilder) GraphvizImage(g *Graph) (*Image, error) {
+	content_type, ok := Outputs[g.Output]
+	if ok == false {
+		g.Output = "png"
+		content_type = Outputs[g.Output]
+	}
 
 	bname := fmt.Sprintf("%s.%s", g.GetId(), g.Output)
 	cachepath := filepath.Join(b.cachepath, bname)
@@ -78,11 +83,6 @@ func (b *GraphBuilder) GraphvizImage(g *Graph) (*Image, error) {
 			return nil, err
 		}
 
-		content_type, ok := Outputs[g.Output]
-		if ok == false {
-			g.Output = "png"
-			content_type = Outputs[g.Output]
-		}
 		ret := &Image{
 			Bytes:       buf,
 			ContentType: content_type,
