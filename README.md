@@ -6,3 +6,5 @@ graphspace - graphviz workspace tool for making dot graphs
 - configurable output image size
 - all graph layouts supported
 - simple on disk cache to improve load time
+
+(image)[https://raw.githubusercontent.com/sigmonsays/graphspace/master/static/graphspace.jpg]
