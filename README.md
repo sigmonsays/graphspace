@@ -7,4 +7,4 @@ graphspace - graphviz workspace tool for making dot graphs
 - all graph layouts supported
 - simple on disk cache to improve load time
 
-![Screenshot](https://raw.githubusercontent.com/sigmonsays/graphspace/master/static/graphspace.jpg)
+[Screenshot is worth a thousand words](https://raw.githubusercontent.com/sigmonsays/graphspace/master/static/graphspace.jpg)
