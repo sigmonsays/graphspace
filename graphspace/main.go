@@ -84,12 +84,15 @@ func (h *GraphvizHandler) Static(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	gologging.SetLogLevel("trace")
+	loglevel := "info"
 	addr := ":7001"
 	datapath := "/tmp/graphspace"
 	flag.StringVar(&addr, "addr", addr, "http server address")
 	flag.StringVar(&datapath, "data", datapath, "data path")
+	flag.StringVar(&loglevel, "loglevel", loglevel, "loglevel")
 	flag.Parse()
+
+	gologging.SetLogLevel(loglevel)
 
 	os.MkdirAll(datapath, 0755)
 	dbpath := filepath.Join(datapath, "graphspace.db")

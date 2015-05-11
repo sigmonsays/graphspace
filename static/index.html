@@ -112,6 +112,9 @@ function submitImage(btn) {
       data: JSON.stringify(data),
       success: function(data) {
          updateImage(data)
+         if (btn == 'save') {
+            refreshRecent()
+         }
       }
    })
 }
