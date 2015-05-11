@@ -87,6 +87,7 @@ body {
 
    </div>
    <div id="tabs-3">
+      Recent Graphs <input class=refresh type=button name=refresh value=Refresh> <br>
       <div id="recent" class="section group"></div>
    </div>
 </div>
@@ -133,6 +134,9 @@ $(function() {
  })
 
  refreshRecent()
+
+$('.refresh').click(function(){
+})
 
  $('.update').click(function(){
    submitImage('update')

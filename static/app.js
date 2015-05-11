@@ -48,6 +48,7 @@ function updateImage(data) {
    if (data.output) {
       $("#form input[name='output'][value=" + data.output + "]").attr('checked', 'checked')
    }
+   refreshRecent()
 }
 
 function deleteImage(id) {
