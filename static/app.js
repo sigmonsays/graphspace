@@ -78,7 +78,7 @@ function refreshRecent() {
             v += " &nbsp; <a href='" + delete_cmd + "'>X</a><br>"
 
             v += "<a href='?id=" + this.id + "'>"
-            v += "<img width=150 height=150 src='/image/graph.png?id=" + this.id + "'/></a>"
+            v += "<img class=thumbnail width=150 height=150 src='/image/graph.png?id=" + this.id + "'/></a>"
             v += "</div>"
             buf += v
          })
