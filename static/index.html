@@ -106,12 +106,33 @@ img.thumbnail {
 
 </form>
 
+<div id=loadingDiv>Loading...</div>
+
 <div id=link></div>
 <div id=graph>click submit to update image</div>
 
 <script>
 
 $(function() {
+
+var $loading = $('#loadingDiv')
+    .hide()  // Hide it initially
+    .ajaxStart(function() {
+        $(this).show();
+    })
+    .ajaxStop(function() {
+        $(this).hide();
+    });
+jQuery.ajaxSetup({
+  beforeSend: function() {
+     $loading.show()
+  },
+  complete: function(){
+     $loading.hide()
+  },
+  success: function() {}
+});
+
 
  $("#text").linedtextarea( {selectedLine: 0} )
 
