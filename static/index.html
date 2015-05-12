@@ -1,6 +1,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="/static/jquery-ui.css">
+<link rel="stylesheet" href="/static/jquery-linedtextarea.css">
 <style>
 body {
       font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
@@ -45,6 +46,7 @@ img.thumbnail {
 
 <script type="text/javascript" src="/static/jquery-1.11.2.js"></script>
 <script type="text/javascript" src="/static/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/jquery-linedtextarea.js"></script>
 <script type="text/javascript" src="/static/app.js"></script>
 <title>graphspace - graphviz editor</title>
 </head>
@@ -109,8 +111,10 @@ img.thumbnail {
 
 <script>
 
-
 $(function() {
+
+ $("#text").linedtextarea( {selectedLine: 0} )
+
  $('#tabs').tabs({
     collapsible: true
  })
