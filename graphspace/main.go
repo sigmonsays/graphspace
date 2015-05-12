@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -31,6 +30,12 @@ type Response struct {
 	ContentType string `json:"content_type"`
 	Description string `json:"description"`
 }
+
+type ErrorResponse struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
 type GraphvizHandler struct {
 	backend *sqlGraphviz
 	builder *GraphBuilder
@@ -46,7 +51,17 @@ func WriteResponse(w http.ResponseWriter, r *http.Request, reply interface{}) {
 func WriteError(w http.ResponseWriter, r *http.Request, err error) {
 	log.Warnf("%s", err)
 	w.WriteHeader(http.StatusBadRequest)
-	fmt.Fprintf(w, "%s", err)
+
+	reply := &ErrorResponse{
+		Code:    -1,
+		Message: err.Error(),
+	}
+
+	err = json.NewEncoder(w).Encode(reply)
+	if err != nil {
+		log.Warnf("%s", err)
+	}
+
 }
 
 func NewGraphvizHandler(dbpath string, builder *GraphBuilder) (*GraphvizHandler, error) {
