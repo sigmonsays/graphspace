@@ -16,6 +16,38 @@ $.fn.serializeObject = function()
     return o;
 };
 
+function submitImage(btn) {
+   var data = $('#form').serializeObject()
+   data['btn']=btn
+   $.ajax({
+      type: "POST",
+      url: "/proc",
+      contentType: "image/png",
+      dataType: "json",
+      data: JSON.stringify(data),
+      error: function(data) {
+         $('#error_message').html("&nbsp; <b>ERROR:</b> " + data.responseJSON['message'])
+      },
+      success: function(data) {
+         updateImage(data)
+         if (btn == 'save') {
+            refreshRecent()
+         }
+      }
+   })
+}
+
+function loadImage(id) {
+   $.ajax({
+      type: "POST",
+      url: "/proc?format=" + $("#form input[name='format']:checked").val() + "&id=" + id,
+      contentType: "image/png",
+      dataType: "json",
+      success: function(data) {
+         updateImage(data)
+      }
+   })
+}
 
 function getUrlParameter(sParam)
 {

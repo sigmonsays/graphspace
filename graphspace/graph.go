@@ -76,8 +76,10 @@ func (b *GraphBuilder) GraphvizImage(g *Graph) (*Image, error) {
 
 	bname := fmt.Sprintf("%s.%s", g.GetId(), g.Output)
 	cachepath := filepath.Join(b.cachepath, bname)
+	log.Tracef("stat %s", cachepath)
 	st, err := os.Stat(cachepath)
 	if err == nil && st.IsDir() == false {
+		log.Tracef("cache hit %s", cachepath)
 		buf, err := ioutil.ReadFile(cachepath)
 		if err != nil {
 			return nil, err
@@ -96,6 +98,7 @@ func (b *GraphBuilder) GraphvizImage(g *Graph) (*Image, error) {
 	}
 
 	// update cache
+	log.Tracef("update cache %s bytes=%d", cachepath, len(image.Bytes))
 	err = ioutil.WriteFile(cachepath, image.Bytes, 0744)
 	if err != nil {
 		return nil, err
@@ -137,14 +140,23 @@ func (b *GraphBuilder) BuildImage(g *Graph) (*Image, error) {
 
 	log.Tracef("%s", cmdline)
 
+	error_response := bytes.NewBuffer(nil)
 	response := bytes.NewBuffer(nil)
 	cmd := exec.Command(cmdline[0], cmdline[1:]...)
 	cmd.Stdin = bytes.NewBuffer([]byte(g.Text))
 	cmd.Stdout = response
+	cmd.Stderr = error_response
 	err = cmd.Run()
 	if err != nil {
 		return nil, err
 	}
+
+	log.Tracef("%d bytes generated", response.Len())
+
+	if response.Len() == 0 {
+		return nil, fmt.Errorf("zero byte file: error: %s", error_response.String())
+	}
+
 	ret := &Image{
 		Bytes:       response.Bytes(),
 		ContentType: content_type,

@@ -99,6 +99,9 @@ img.thumbnail {
 <br>
 <input class=update type=button name=btn value="Update Graph"> &nbsp;
 <input class=save type=button name=btn value="Save">
+
+<span class=error id=error_message>&nbsp; </span>
+
 </form>
 
 <div id=link></div>
@@ -106,35 +109,6 @@ img.thumbnail {
 
 <script>
 
-function submitImage(btn) {
-   var data = $('#form').serializeObject()
-   data['btn']=btn
-   $.ajax({
-      type: "POST",
-      url: "/proc",
-      contentType: "image/png",
-      dataType: "json",
-      data: JSON.stringify(data),
-      success: function(data) {
-         updateImage(data)
-         if (btn == 'save') {
-            refreshRecent()
-         }
-      }
-   })
-}
-
-function loadImage(id) {
-   $.ajax({
-      type: "POST",
-      url: "/proc?format=" + $("#form input[name='format']:checked").val() + "&id=" + id,
-      contentType: "image/png",
-      dataType: "json",
-      success: function(data) {
-         updateImage(data)
-      }
-   })
-}
 
 $(function() {
  $('#tabs').tabs({
