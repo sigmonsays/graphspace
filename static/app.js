@@ -76,6 +76,7 @@ function getUrlParameter(sParam)
 function updateImage(data) {
    var img_url = '/image/graph.' + data.output + '?id=' + data.id
 
+   $('#error_message').html("")
    $('#graph').html('<a href="' + img_url + '"><img src="data:' + data.content_type + ';base64,' + data.image + '"/></a>')
    $('#text').val(data.text)
    $('#description').val(data.description)
