@@ -105,7 +105,9 @@ img.thumbnail {
 </div>
 <br>
 <input class=update type=button name=btn value="Update Graph"> &nbsp;
-<input class=save type=button name=btn value="Save">
+<input class=save type=button name=btn value="Save"> &nbsp; 
+<input class=share type=button name=btn value="Share"> &nbsp; 
+<span id=link></span>
 
 <span class=error id=error_message>&nbsp; </span>
 
@@ -114,7 +116,6 @@ img.thumbnail {
 <div id=loadingDiv>Loading...</div>
 
 
-<div id=link></div>
 <div id=graph>click submit to update image</div>
 
 <script>
@@ -162,6 +163,11 @@ $('.refresh').click(function(){
    submitImage('save')
    return false;
  });
+ $('.share').click(function(){
+   shareImage()
+   return false;
+ });
+
 
  id = getUrlParameter("id")
  if (id) {

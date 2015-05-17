@@ -16,6 +16,10 @@ $.fn.serializeObject = function()
     return o;
 };
 
+function shareImage() {
+   submitImage('share')
+}
+
 function submitImage(btn) {
    var data = $('#form').serializeObject()
    data['btn']=btn
@@ -32,7 +36,13 @@ function submitImage(btn) {
          updateImage(data)
          if (btn == 'save') {
             refreshRecent()
+         } else if (btn == 'share') {
+            var img_url = '/image/graph.' + data.output + '?id=' + data.id
+            var link_text = '<a href="?id=' + data.id + '">share<a/>'
+            link_text += '&nbsp; <a href="' + img_url + '">image<a/>'
+            $('#link').html(link_text)
          }
+
       }
    })
 }
@@ -65,9 +75,6 @@ function getUrlParameter(sParam)
 
 function updateImage(data) {
    var img_url = '/image/graph.' + data.output + '?id=' + data.id
-   var link_text = '<a href="?id=' + data.id + '">share<a/>'
-   link_text += '&nbsp; <a href="' + img_url + '">image<a/>'
-   $('#link').html(link_text)
 
    $('#graph').html('<a href="' + img_url + '"><img src="data:' + data.content_type + ';base64,' + data.image + '"/></a>')
    $('#text').val(data.text)
