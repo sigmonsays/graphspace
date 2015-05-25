@@ -25,7 +25,7 @@ type asset struct {
 
 // static_app_js reads file data from disk. It returns an error on failure.
 func static_app_js() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/app.js"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/app.js"
 	name := "static/app.js"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -43,7 +43,7 @@ func static_app_js() (*asset, error) {
 
 // static_graphspace_jpg reads file data from disk. It returns an error on failure.
 func static_graphspace_jpg() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/graphspace.jpg"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/graphspace.jpg"
 	name := "static/graphspace.jpg"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -61,7 +61,7 @@ func static_graphspace_jpg() (*asset, error) {
 
 // static_index_html reads file data from disk. It returns an error on failure.
 func static_index_html() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/index.html"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/index.html"
 	name := "static/index.html"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -79,7 +79,7 @@ func static_index_html() (*asset, error) {
 
 // static_jquery_1_11_2_js reads file data from disk. It returns an error on failure.
 func static_jquery_1_11_2_js() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-1.11.2.js"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-1.11.2.js"
 	name := "static/jquery-1.11.2.js"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -97,7 +97,7 @@ func static_jquery_1_11_2_js() (*asset, error) {
 
 // static_jquery_1_11_2_min_js reads file data from disk. It returns an error on failure.
 func static_jquery_1_11_2_min_js() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-1.11.2.min.js"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-1.11.2.min.js"
 	name := "static/jquery-1.11.2.min.js"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -115,7 +115,7 @@ func static_jquery_1_11_2_min_js() (*asset, error) {
 
 // static_jquery_linedtextarea_css reads file data from disk. It returns an error on failure.
 func static_jquery_linedtextarea_css() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-linedtextarea.css"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-linedtextarea.css"
 	name := "static/jquery-linedtextarea.css"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -133,7 +133,7 @@ func static_jquery_linedtextarea_css() (*asset, error) {
 
 // static_jquery_linedtextarea_js reads file data from disk. It returns an error on failure.
 func static_jquery_linedtextarea_js() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-linedtextarea.js"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-linedtextarea.js"
 	name := "static/jquery-linedtextarea.js"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -151,7 +151,7 @@ func static_jquery_linedtextarea_js() (*asset, error) {
 
 // static_jquery_ui_css reads file data from disk. It returns an error on failure.
 func static_jquery_ui_css() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-ui.css"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-ui.css"
 	name := "static/jquery-ui.css"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -169,7 +169,7 @@ func static_jquery_ui_css() (*asset, error) {
 
 // static_jquery_ui_js reads file data from disk. It returns an error on failure.
 func static_jquery_ui_js() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-ui.js"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/jquery-ui.js"
 	name := "static/jquery-ui.js"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -187,7 +187,7 @@ func static_jquery_ui_js() (*asset, error) {
 
 // static_images_ui_bg_diagonals_thick_18_b81900_40x40_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_diagonals_thick_18_b81900_40x40_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_diagonals-thick_18_b81900_40x40.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_diagonals-thick_18_b81900_40x40.png"
 	name := "static/images/ui-bg_diagonals-thick_18_b81900_40x40.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -205,7 +205,7 @@ func static_images_ui_bg_diagonals_thick_18_b81900_40x40_png() (*asset, error) {
 
 // static_images_ui_bg_diagonals_thick_20_666666_40x40_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_diagonals_thick_20_666666_40x40_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_diagonals-thick_20_666666_40x40.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_diagonals-thick_20_666666_40x40.png"
 	name := "static/images/ui-bg_diagonals-thick_20_666666_40x40.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -223,7 +223,7 @@ func static_images_ui_bg_diagonals_thick_20_666666_40x40_png() (*asset, error) {
 
 // static_images_ui_bg_flat_0_aaaaaa_40x100_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_flat_0_aaaaaa_40x100_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_flat_0_aaaaaa_40x100.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_flat_0_aaaaaa_40x100.png"
 	name := "static/images/ui-bg_flat_0_aaaaaa_40x100.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -241,7 +241,7 @@ func static_images_ui_bg_flat_0_aaaaaa_40x100_png() (*asset, error) {
 
 // static_images_ui_bg_flat_10_000000_40x100_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_flat_10_000000_40x100_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_flat_10_000000_40x100.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_flat_10_000000_40x100.png"
 	name := "static/images/ui-bg_flat_10_000000_40x100.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -259,7 +259,7 @@ func static_images_ui_bg_flat_10_000000_40x100_png() (*asset, error) {
 
 // static_images_ui_bg_flat_75_ffffff_40x100_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_flat_75_ffffff_40x100_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_flat_75_ffffff_40x100.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_flat_75_ffffff_40x100.png"
 	name := "static/images/ui-bg_flat_75_ffffff_40x100.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -277,7 +277,7 @@ func static_images_ui_bg_flat_75_ffffff_40x100_png() (*asset, error) {
 
 // static_images_ui_bg_glass_100_f6f6f6_1x400_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_glass_100_f6f6f6_1x400_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_100_f6f6f6_1x400.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_100_f6f6f6_1x400.png"
 	name := "static/images/ui-bg_glass_100_f6f6f6_1x400.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -295,7 +295,7 @@ func static_images_ui_bg_glass_100_f6f6f6_1x400_png() (*asset, error) {
 
 // static_images_ui_bg_glass_100_fdf5ce_1x400_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_glass_100_fdf5ce_1x400_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_100_fdf5ce_1x400.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_100_fdf5ce_1x400.png"
 	name := "static/images/ui-bg_glass_100_fdf5ce_1x400.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -313,7 +313,7 @@ func static_images_ui_bg_glass_100_fdf5ce_1x400_png() (*asset, error) {
 
 // static_images_ui_bg_glass_55_fbf9ee_1x400_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_glass_55_fbf9ee_1x400_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_55_fbf9ee_1x400.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_55_fbf9ee_1x400.png"
 	name := "static/images/ui-bg_glass_55_fbf9ee_1x400.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -331,7 +331,7 @@ func static_images_ui_bg_glass_55_fbf9ee_1x400_png() (*asset, error) {
 
 // static_images_ui_bg_glass_65_ffffff_1x400_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_glass_65_ffffff_1x400_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_65_ffffff_1x400.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_65_ffffff_1x400.png"
 	name := "static/images/ui-bg_glass_65_ffffff_1x400.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -349,7 +349,7 @@ func static_images_ui_bg_glass_65_ffffff_1x400_png() (*asset, error) {
 
 // static_images_ui_bg_glass_75_dadada_1x400_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_glass_75_dadada_1x400_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_75_dadada_1x400.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_75_dadada_1x400.png"
 	name := "static/images/ui-bg_glass_75_dadada_1x400.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -367,7 +367,7 @@ func static_images_ui_bg_glass_75_dadada_1x400_png() (*asset, error) {
 
 // static_images_ui_bg_glass_75_e6e6e6_1x400_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_glass_75_e6e6e6_1x400_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_75_e6e6e6_1x400.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_75_e6e6e6_1x400.png"
 	name := "static/images/ui-bg_glass_75_e6e6e6_1x400.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -385,7 +385,7 @@ func static_images_ui_bg_glass_75_e6e6e6_1x400_png() (*asset, error) {
 
 // static_images_ui_bg_glass_95_fef1ec_1x400_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_glass_95_fef1ec_1x400_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_95_fef1ec_1x400.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_glass_95_fef1ec_1x400.png"
 	name := "static/images/ui-bg_glass_95_fef1ec_1x400.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -403,7 +403,7 @@ func static_images_ui_bg_glass_95_fef1ec_1x400_png() (*asset, error) {
 
 // static_images_ui_bg_gloss_wave_35_f6a828_500x100_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_gloss_wave_35_f6a828_500x100_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_gloss-wave_35_f6a828_500x100.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_gloss-wave_35_f6a828_500x100.png"
 	name := "static/images/ui-bg_gloss-wave_35_f6a828_500x100.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -421,7 +421,7 @@ func static_images_ui_bg_gloss_wave_35_f6a828_500x100_png() (*asset, error) {
 
 // static_images_ui_bg_highlight_soft_100_eeeeee_1x100_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_highlight_soft_100_eeeeee_1x100_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_highlight-soft_100_eeeeee_1x100.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_highlight-soft_100_eeeeee_1x100.png"
 	name := "static/images/ui-bg_highlight-soft_100_eeeeee_1x100.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -439,7 +439,7 @@ func static_images_ui_bg_highlight_soft_100_eeeeee_1x100_png() (*asset, error) {
 
 // static_images_ui_bg_highlight_soft_75_cccccc_1x100_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_highlight_soft_75_cccccc_1x100_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_highlight-soft_75_cccccc_1x100.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_highlight-soft_75_cccccc_1x100.png"
 	name := "static/images/ui-bg_highlight-soft_75_cccccc_1x100.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -457,7 +457,7 @@ func static_images_ui_bg_highlight_soft_75_cccccc_1x100_png() (*asset, error) {
 
 // static_images_ui_bg_highlight_soft_75_ffe45c_1x100_png reads file data from disk. It returns an error on failure.
 func static_images_ui_bg_highlight_soft_75_ffe45c_1x100_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_highlight-soft_75_ffe45c_1x100.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-bg_highlight-soft_75_ffe45c_1x100.png"
 	name := "static/images/ui-bg_highlight-soft_75_ffe45c_1x100.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -475,7 +475,7 @@ func static_images_ui_bg_highlight_soft_75_ffe45c_1x100_png() (*asset, error) {
 
 // static_images_ui_icons_222222_256x240_png reads file data from disk. It returns an error on failure.
 func static_images_ui_icons_222222_256x240_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_222222_256x240.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_222222_256x240.png"
 	name := "static/images/ui-icons_222222_256x240.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -493,7 +493,7 @@ func static_images_ui_icons_222222_256x240_png() (*asset, error) {
 
 // static_images_ui_icons_228ef1_256x240_png reads file data from disk. It returns an error on failure.
 func static_images_ui_icons_228ef1_256x240_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_228ef1_256x240.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_228ef1_256x240.png"
 	name := "static/images/ui-icons_228ef1_256x240.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -511,7 +511,7 @@ func static_images_ui_icons_228ef1_256x240_png() (*asset, error) {
 
 // static_images_ui_icons_2e83ff_256x240_png reads file data from disk. It returns an error on failure.
 func static_images_ui_icons_2e83ff_256x240_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_2e83ff_256x240.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_2e83ff_256x240.png"
 	name := "static/images/ui-icons_2e83ff_256x240.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -529,7 +529,7 @@ func static_images_ui_icons_2e83ff_256x240_png() (*asset, error) {
 
 // static_images_ui_icons_454545_256x240_png reads file data from disk. It returns an error on failure.
 func static_images_ui_icons_454545_256x240_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_454545_256x240.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_454545_256x240.png"
 	name := "static/images/ui-icons_454545_256x240.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -547,7 +547,7 @@ func static_images_ui_icons_454545_256x240_png() (*asset, error) {
 
 // static_images_ui_icons_888888_256x240_png reads file data from disk. It returns an error on failure.
 func static_images_ui_icons_888888_256x240_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_888888_256x240.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_888888_256x240.png"
 	name := "static/images/ui-icons_888888_256x240.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -565,7 +565,7 @@ func static_images_ui_icons_888888_256x240_png() (*asset, error) {
 
 // static_images_ui_icons_cd0a0a_256x240_png reads file data from disk. It returns an error on failure.
 func static_images_ui_icons_cd0a0a_256x240_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_cd0a0a_256x240.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_cd0a0a_256x240.png"
 	name := "static/images/ui-icons_cd0a0a_256x240.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -583,7 +583,7 @@ func static_images_ui_icons_cd0a0a_256x240_png() (*asset, error) {
 
 // static_images_ui_icons_ef8c08_256x240_png reads file data from disk. It returns an error on failure.
 func static_images_ui_icons_ef8c08_256x240_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_ef8c08_256x240.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_ef8c08_256x240.png"
 	name := "static/images/ui-icons_ef8c08_256x240.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -601,7 +601,7 @@ func static_images_ui_icons_ef8c08_256x240_png() (*asset, error) {
 
 // static_images_ui_icons_ffd27a_256x240_png reads file data from disk. It returns an error on failure.
 func static_images_ui_icons_ffd27a_256x240_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_ffd27a_256x240.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_ffd27a_256x240.png"
 	name := "static/images/ui-icons_ffd27a_256x240.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -619,7 +619,7 @@ func static_images_ui_icons_ffd27a_256x240_png() (*asset, error) {
 
 // static_images_ui_icons_ffffff_256x240_png reads file data from disk. It returns an error on failure.
 func static_images_ui_icons_ffffff_256x240_png() (*asset, error) {
-	path := "/home/sig/go/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_ffffff_256x240.png"
+	path := "/home/sig/go-dev/graphspace/src/github.com/sigmonsays/graphspace/static/images/ui-icons_ffffff_256x240.png"
 	name := "static/images/ui-icons_ffffff_256x240.png"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
