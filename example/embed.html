@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>example graphspace embed</title>
+
+<!-- get all the graphspace includes -->
+<link rel="stylesheet" href="http://_SERVER_/static/jquery-ui.css">
+<link rel="stylesheet" href="http://_SERVER_/static/jquery-linedtextarea.css">
+<script type="text/javascript" src="http://_SERVER_/static/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="http://_SERVER_/static/jquery-ui.js"></script>
+<script type="text/javascript" src="http://_SERVER_/static/jquery-linedtextarea.js"></script>
+<script type="text/javascript" src="http://_SERVER_/static/app.js"></script>
+
+</head>
+<body>
+
+
+<div id="example1-data" style="display: none;">
+graph G {
+   layout = neato;
+
+   run -- intr;
+   intr -- runbl;
+   runbl -- run;
+   run -- kernel;
+   kernel -- zombie;
+   kernel -- sleep;
+   kernel -- runmem;
+   sleep -- swap;
+   swap -- runswap;
+   runswap -- new;
+   runswap -- runmem;
+   new -- runmem;
+   sleep -- runmem;
+}
+</div>
+<div id="example1"></div>
+
+<script type="text/javascript">
+   GraphspaceEmbed("_SERVER_", "example1-data", "example1")
+</script>
+
+</body>
+</html>

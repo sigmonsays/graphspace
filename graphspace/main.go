@@ -9,6 +9,7 @@ import (
 
 	"github.com/sigmonsays/go-apachelog"
 	gologging "github.com/sigmonsays/go-logging"
+	"github.com/sigmonsays/graphspace/config"
 	"github.com/sigmonsays/graphspace/data"
 )
 
@@ -39,6 +40,7 @@ type ErrorResponse struct {
 type GraphvizHandler struct {
 	backend *sqlGraphviz
 	builder *GraphBuilder
+	Cors    []string
 }
 
 func WriteResponse(w http.ResponseWriter, r *http.Request, reply interface{}) {
@@ -72,6 +74,7 @@ func NewGraphvizHandler(dbpath string, builder *GraphBuilder) (*GraphvizHandler,
 	gr := &GraphvizHandler{
 		backend: backend,
 		builder: builder,
+		Cors:    make([]string, 0),
 	}
 	return gr, nil
 }
@@ -99,13 +102,24 @@ func (h *GraphvizHandler) Static(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	configfile := ""
 	loglevel := "info"
 	addr := ":7001"
 	datapath := "/tmp/graphspace"
+	flag.StringVar(&configfile, "config", "", "config file")
 	flag.StringVar(&addr, "addr", addr, "http server address")
 	flag.StringVar(&datapath, "data", datapath, "data path")
 	flag.StringVar(&loglevel, "loglevel", loglevel, "loglevel")
 	flag.Parse()
+
+	conf := config.GetDefaultConfig()
+	if configfile != "" {
+		err := conf.LoadYaml(configfile)
+		if err != nil {
+			log.Errorf("load config: %s: %s", configfile, err)
+			os.Exit(1)
+		}
+	}
 
 	gologging.SetLogLevel(loglevel)
 
@@ -120,6 +134,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	svc.Cors = conf.Cors
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", svc.Index)

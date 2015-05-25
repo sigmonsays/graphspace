@@ -129,3 +129,28 @@ function refreshRecent() {
       }
    })
 }
+
+
+function GraphspaceEmbed(server, content_id, display_id) {
+
+   var url = "http://" + server + "/proc"
+
+   var data = {
+      'btn': 'save',
+      'format': 'dot',
+      'btn': 'update',
+      'text': $('#'+content_id).text(),
+      'output': 'png'
+   }
+   $.ajax({
+      type: "POST",
+      url: url,
+      contentType: "image/png",
+      dataType: "json",
+      data: JSON.stringify(data),
+      success: function(data) {
+         $('#' + display_id).html('<img src="data:' + data.content_type + ';base64,' + data.image + '"/>')
+      }
+   })
+
+}

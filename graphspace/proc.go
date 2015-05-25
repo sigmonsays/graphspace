@@ -8,6 +8,21 @@ import (
 )
 
 func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
+	origin := r.Header.Get("Origin")
+	hdr := w.Header()
+	for _, server := range h.Cors {
+		if origin == server {
+			hdr.Set("Access-Control-Allow-Origin", server)
+			break
+		}
+	}
+	hdr.Set("Access-Control-Allow-Methods", "POST")
+	hdr.Set("Access-Control-Allow-Headers", "Content-Type")
+
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(200)
+		return
+	}
 
 	err := r.ParseForm()
 	if err != nil {
