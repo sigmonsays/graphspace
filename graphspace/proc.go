@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
+func (h *GraphvizHandler) initCors(w http.ResponseWriter, r *http.Request) {
 	origin := r.Header.Get("Origin")
 	hdr := w.Header()
 	for _, server := range h.Cors {
@@ -18,6 +18,13 @@ func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
 	}
 	hdr.Set("Access-Control-Allow-Methods", "POST")
 	hdr.Set("Access-Control-Allow-Headers", "Content-Type")
+}
+
+func (h *GraphvizHandler) Proc(w http.ResponseWriter, r *http.Request) {
+
+	if h.Cors != nil {
+		h.initCors(w, r)
+	}
 
 	if r.Method == "OPTIONS" {
 		w.WriteHeader(200)
