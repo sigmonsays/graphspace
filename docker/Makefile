@@ -1,4 +1,4 @@
-IMAGE_VERSION = 1
+IMAGE_VERSION = 2
 
 all:
 	mkdir -p ./bin/

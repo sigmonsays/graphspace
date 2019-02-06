@@ -1,4 +1,4 @@
-FROM scratch
-COPY bin/graphspace /
+FROM golang:1.11
+COPY bin/graphspace /bin/graphspace
 EXPOSE 7001
-CMD [ "graphspace" ]
+CMD [ "/bin/graphspace" ]
