@@ -11,6 +11,9 @@ graphspace - graphviz workspace tool for making dot graphs
 
 # docker
 
+docker hub image is built at https://hub.docker.com/r/sigmonsays/graphspace
+
+
 launch a graphspace container
 
     docker run -d --name graphspace1 sigmonsays/graphspace 
