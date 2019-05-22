@@ -15,9 +15,14 @@ launch a graphspace container
 
     docker run -d --name graphspace1 sigmonsays/graphspace 
 
-connect to docker ip
+connect directly to private docker ip
 
     IP="$(docker inspect graphspace1 -f '{{ .NetworkSettings.IPAddress }}')"
     echo url is http://$IP:7001
+
+
+launch a graphspace container and expose port
+
+    docker run -d -p 7001:7001 --name graphspace1 sigmonsays/graphspace 
 
 
