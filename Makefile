@@ -1,4 +1,6 @@
 
+.PHONY:  docker
+
 BIN := go-bindata
 # BIN := go-bindata-assetfs
 
@@ -14,3 +16,10 @@ dep:
 	go get github.com/elazarl/go-bindata-assetfs/...
 
 	
+docker:
+	# build docker image
+	docker build -t graphspace:latest .
+docker-push:
+	docker tag graphspace:latest sigmonsays/graphspace:latest
+	docker push sigmonsays/graphspace:latest
+
