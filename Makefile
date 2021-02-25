@@ -4,7 +4,7 @@
 BIN := go-bindata
 # BIN := go-bindata-assetfs
 
-all:
+all: dep
 	$(BIN) -pkg data -o data/bindata.go static static/images
 
 dev:
