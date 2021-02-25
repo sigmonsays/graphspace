@@ -1,26 +1,28 @@
+.PHONY: install
 
-.PHONY:  docker
+TOPDIR = $(shell pwd)
 
-GOPATH = $(shell go env GOPATH)
-GOBINDATA := $(GOPATH)/bin/go-bindata
+export GOWORKSPACE := $(shell pwd)
+export GOBIN := $(GOWORKSPACE)/bin
+export GO111MODULE := on
 
-# BIN := go-bindata-assetfs
+GO_BINS =
+GO_BINS += graphspace
 
-all: dep
-	$(GOBINDATA) -pkg data -o data/bindata.go static static/images
+all:
+	$(MAKE) compile
 
-dev:
-	$(GOBINDATA) -debug -pkg data -o data/bindata.go static static/images
-	go install github.com/sigmonsays/graphspace/...
+compile:
+	mkdir -p tmp
+	mkdir -p $(GOBIN)
+	go install github.com/...
 
-dep:
-	go get github.com/jteeuwen/go-bindata/go-bindata
-	go get github.com/elazarl/go-bindata-assetfs/...
+install:
+	mkdir -p $(DESTDIR)/$(INSTALL_PREFIX)/bin/ 
+	$(MAKE) install-bins
 
-docker:
-    # build docker image
-	docker build -t graphspace:latest .
-docker-push:
-	docker tag graphspace:latest sigmonsays/graphspace:latest
-	docker push sigmonsays/graphspace:latest
+install-bins: $(addprefix installbin-, $(GO_BINS))
 
+$(addprefix installbin-, $(GO_BINS)):
+	$(eval BIN=$(@:installbin-%=%))
+	cp -v $(GOBIN)/$(BIN) $(DESTDIR)/$(INSTALL_PREFIX)/bin/
