@@ -122,11 +122,13 @@ func (b *GraphBuilder) BuildImage(g *Graph) (*Image, error) {
 		g.Output = "png"
 		content_type = Outputs[g.Output]
 	}
-	cmdline = append(cmdline, "-T"+g.Output)
+	cmdline = append(cmdline, "-T"+g.Output)	
+
+	dpi := 100
 
 	if g.Width > 0 && g.Height > 0 {
 		cmdline = append(cmdline, fmt.Sprintf("-Gsize=%d,%d!", g.Width, g.Height))
-		cmdline = append(cmdline, "-Gdpi=100")
+		cmdline = append(cmdline, fmt.Sprintf("-Gdpi=%d", dpi))
 	}
 
 	if g.Text == "" {
